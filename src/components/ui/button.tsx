@@ -10,6 +10,10 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        sales:
+          "bg-primary text-primary-foreground shadow-[0_10px_28px_var(--shadow-primary)] hover:bg-primary-strong",
+        salesOutline:
+          "border border-primary/50 bg-transparent text-primary hover:bg-primary/10",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
           "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
@@ -21,6 +25,7 @@ const buttonVariants = cva(
         default: "h-9 px-4 py-2",
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
+        xl: "h-14 rounded-md px-8 text-base font-bold uppercase",
         icon: "h-9 w-9",
       },
     },
