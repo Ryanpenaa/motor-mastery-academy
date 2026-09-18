@@ -77,6 +77,12 @@ const faqs = [
   ["Como funciona a garantia de 7 dias?", "Você pode acessar o curso e avaliar o conteúdo durante o período de garantia estabelecido na compra."],
 ];
 
+const audiences = [
+  { Icon: GraduationCap, title: "Quem começa do zero", text: "Conteúdo progressivo e linguagem simples." },
+  { Icon: Wrench, title: "Quem já faz manutenção", text: "Organize conhecimentos e amplie sua base técnica." },
+  { Icon: Star, title: "Quem busca uma profissão", text: "Construa uma base prática para buscar oportunidades na área." },
+];
+
 function TrustLine() {
   return <p className="mt-4 flex flex-wrap justify-center gap-x-2 text-center text-xs font-semibold text-muted-foreground"><span>Acesso imediato</span><span>•</span><span>Compra segura</span><span>•</span><span>Garantia de 7 dias</span></p>;
 }
@@ -146,7 +152,7 @@ function Index() {
     </div></section>
 
     <section className="py-16 md:py-24"><div className="mx-auto max-w-7xl px-5 md:px-8"><SectionHeading eyebrow="Para quem é" title="Comece do seu ponto de partida" text="Uma formação pensada para diferentes objetivos na mecânica de motocicletas." />
-      <div className="grid gap-4 md:grid-cols-3">{[[GraduationCap,"Quem começa do zero","Conteúdo progressivo e linguagem simples."],[Wrench,"Quem já faz manutenção","Organize conhecimentos e amplie sua base técnica."],[Star,"Quem busca uma profissão","Construa uma base prática para buscar oportunidades na área."]].map(([Icon,title,text])=><article key={String(title)} className="border-l-4 border-primary bg-muted p-6"><Icon className="mb-4 size-7 text-primary"/><h3 className="text-xl font-bold uppercase">{String(title)}</h3><p className="mt-2 text-sm text-muted-foreground">{String(text)}</p></article>)}</div>
+      <div className="grid gap-4 md:grid-cols-3">{audiences.map(({ Icon,title,text })=><article key={title} className="border-l-4 border-primary bg-muted p-6"><Icon className="mb-4 size-7 text-primary"/><h3 className="text-xl font-bold uppercase">{title}</h3><p className="mt-2 text-sm text-muted-foreground">{text}</p></article>)}</div>
     </div></section>
 
     <section className="bg-surface-dark py-16 text-surface-dark-foreground md:py-24"><div className="mx-auto grid max-w-7xl items-center gap-12 px-5 md:grid-cols-2 md:px-8"><div><p className="text-xs font-extrabold uppercase tracking-widest text-primary">Uma habilidade profissional</p><h2 className="mt-3 text-4xl font-extrabold uppercase md:text-5xl">Motos estão em todos os lugares</h2><p className="mt-5 leading-7 text-steel">Utilizadas para trabalho, transporte e lazer. Desenvolva uma base prática para entender manutenção, identificar defeitos e começar a buscar oportunidades.</p><div className="mt-7"><Cta /></div></div><div className="grid gap-4 sm:grid-cols-2"><div className="rounded-lg border border-primary/20 bg-surface-dark-soft p-6"><Award className="mb-5 size-9 text-primary"/><h3 className="text-2xl font-bold uppercase">Certificado digital</h3><p className="mt-3 text-sm leading-6 text-steel">Incluído no Plano Profissional após a conclusão da formação.</p></div><div className="rounded-lg border border-primary/20 bg-surface-dark-soft p-6"><ShieldCheck className="mb-5 size-9 text-accent"/><h3 className="text-2xl font-bold uppercase">7 dias de garantia</h3><p className="mt-3 text-sm leading-6 text-steel">Conheça a plataforma e avalie a formação dentro do período de garantia.</p></div></div></div></section>
