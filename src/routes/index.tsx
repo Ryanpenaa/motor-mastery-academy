@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  Award, BookOpen, Check, ChevronRight, CircleGauge, Clock3, Cog, FileCheck2,
-  Gauge, GraduationCap, Infinity, Laptop, Play, ShieldCheck, Smartphone, Sparkles,
-  Star, TabletSmartphone, Wrench,
+  Award, Check, ChevronRight, Clock3, Cog, GraduationCap, Laptop, Play,
+  ShieldCheck, Smartphone, Star, TabletSmartphone, Wrench,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -19,25 +19,6 @@ export const Route = createFileRoute("/")({
   ]}),
   component: Index,
 });
-
-const benefits = [
-  [Play, "80+ videoaulas práticas", "Aprenda mecânica de motocicletas de forma simples e organizada."],
-  [Gauge, "Do zero ao avançado", "Comece mesmo sem experiência anterior com motos ou mecânica."],
-  [BookOpen, "Materiais de apoio", "Apostilas, guias, tabelas e checklists para acompanhar seus estudos."],
-  [Infinity, "Acesso vitalício", "Estude pelo celular ou computador e reveja quando precisar."],
-] as const;
-
-const modules = [
-  [Cog, "Motor de motos", "Funcionamento, principais componentes, manutenção e montagem."],
-  [CircleGauge, "Sistema de alimentação", "Carburadores, alimentação e falhas no funcionamento do motor."],
-  [Gauge, "Injeção eletrônica", "Sensores, atuadores e fundamentos da injeção eletrônica."],
-  [Sparkles, "Sistema elétrico", "Bateria, partida, carga, ignição e identificação de falhas."],
-  [ShieldCheck, "Freios", "Componentes, inspeções e procedimentos de manutenção."],
-  [Wrench, "Suspensão", "Suspensão dianteira e traseira, componentes e sinais de desgaste."],
-  [Cog, "Embreagem e transmissão", "Embreagem, câmbio, relação, corrente, coroa e pinhão."],
-  [FileCheck2, "Manutenção preventiva", "Os principais pontos que devem ser verificados em uma revisão."],
-  [CircleGauge, "Diagnóstico de defeitos", "Sintomas e possíveis causas de problemas mecânicos e elétricos."],
-] as const;
 
 const support = [
   "Apostila de Mecânica de Motos", "Tabela de Torques e Especificações", "Checklist de Revisão Preventiva",
@@ -83,6 +64,92 @@ const audiences = [
   { Icon: Star, title: "Quem busca uma profissão", text: "Construa uma base prática para buscar oportunidades na área." },
 ];
 
+const courseSamples = [
+  "Motor de motos",
+  "Sistema de alimentação",
+  "Injeção eletrônica",
+  "Sistema elétrico",
+  "Sistema de freios",
+  "Suspensão de motos",
+  "Embreagem de motos",
+  "Transmissão final",
+  "Manutenção preventiva",
+  "Diagnóstico de defeitos",
+] as const;
+
+function CourseSamplesCarousel() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActive((current) => (current + 1) % courseSamples.length);
+    }, 3500);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const previous = () => setActive((current) => (current - 1 + courseSamples.length) % courseSamples.length);
+  const next = () => setActive((current) => (current + 1) % courseSamples.length);
+
+  return (
+    <div className="mx-auto max-w-md">
+      <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+        <div className="relative aspect-[2/3] w-full bg-white">
+          <div
+            role="img"
+            aria-label={courseSamples[active]}
+            className="absolute inset-0 bg-no-repeat"
+            style={{
+              backgroundImage: 'url("/amostras-conteudo-mecanica-motos.jpg")',
+              backgroundSize: "100% 1000%",
+              backgroundPosition: `center ${(active * 100) / (courseSamples.length - 1)}%`,
+            }}
+          />
+        </div>
+
+        <button
+          type="button"
+          onClick={previous}
+          aria-label="Amostra anterior"
+          className="absolute left-2 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-black/65 text-white shadow-md backdrop-blur transition hover:bg-black/80"
+        >
+          <ChevronRight className="size-5 rotate-180" />
+        </button>
+
+        <button
+          type="button"
+          onClick={next}
+          aria-label="Próxima amostra"
+          className="absolute right-2 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-black/65 text-white shadow-md backdrop-blur transition hover:bg-black/80"
+        >
+          <ChevronRight className="size-5" />
+        </button>
+      </div>
+
+      <p className="mt-4 text-center text-sm font-bold uppercase text-foreground">
+        {courseSamples[active]}
+      </p>
+
+      <div className="mt-4 flex justify-center gap-2">
+        {courseSamples.map((item, index) => (
+          <button
+            key={item}
+            type="button"
+            onClick={() => setActive(index)}
+            aria-label={`Ver amostra ${index + 1}: ${item}`}
+            className={`h-2.5 rounded-full transition-all ${
+              active === index ? "w-7 bg-primary" : "w-2.5 bg-border hover:bg-muted-foreground/40"
+            }`}
+          />
+        ))}
+      </div>
+
+      <p className="mx-auto mt-5 max-w-sm text-center text-xs leading-5 text-muted-foreground">
+        Arraste visualmente pelas amostras ou use as setas. O carrossel avança automaticamente.
+      </p>
+    </div>
+  );
+}
+
 function TrustLine() {
   return <p className="mt-4 flex flex-wrap justify-center gap-x-2 text-center text-xs font-semibold text-muted-foreground"><span>Acesso imediato</span><span>•</span><span>Compra segura</span><span>•</span><span>Garantia de 7 dias</span></p>;
 }
@@ -121,15 +188,9 @@ function Index() {
       </div>
     </section>
 
-    <section className="border-b border-border bg-card py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-5 md:px-8"><SectionHeading eyebrow="O que você recebe" title="Tudo para começar na mecânica de motos" />
-        <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-4">{benefits.map(([Icon,title,text]) => <article key={title} className="bg-card p-6"><Icon className="mb-5 size-8 text-primary"/><h3 className="text-xl font-bold uppercase">{title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{text}</p></article>)}</div>
-      </div>
-    </section>
-
-    <section className="py-16 md:py-24"><div className="mx-auto max-w-7xl px-5 md:px-8"><SectionHeading eyebrow="Conteúdo da formação" title="O que você vai aprender" text="Uma base prática para entender os sistemas de uma motocicleta e os serviços realizados no dia a dia de uma oficina." />
-      <div className="grid gap-4 md:grid-cols-3">{modules.map(([Icon,title,text],i) => <article key={title} className="group rounded-lg border border-border bg-card p-6 transition hover:border-primary/60 hover:shadow-lg"><span className="mb-7 flex items-center justify-between"><Icon className="size-7 text-primary"/><b className="font-display text-3xl text-muted">0{i+1}</b></span><h3 className="text-xl font-bold uppercase">{title}</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p></article>)}</div>
-      <p className="mx-auto mt-8 max-w-2xl text-center font-semibold">Tudo explicado em videoaulas organizadas, com linguagem simples e passo a passo.</p>
+    <section className="py-14 md:py-20"><div className="mx-auto max-w-7xl px-4 md:px-8"><SectionHeading eyebrow="Conteúdo da formação" title="O que você vai aprender" text="Uma base prática para entender os sistemas de uma motocicleta e os serviços realizados no dia a dia de uma oficina." />
+      <CourseSamplesCarousel />
+      <p className="mx-auto mt-8 max-w-2xl text-center font-semibold">Veja exemplos reais do conteúdo visual que acompanha sua formação.</p>
     </div></section>
 
     <section className="bg-muted py-16 md:py-24"><div className="mx-auto max-w-7xl px-5 md:px-8"><SectionHeading eyebrow="Material de apoio" title="Materiais para estudar e consultar" text="Guias, manuais e checklists ilustrados para complementar suas aulas." />
