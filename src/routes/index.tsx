@@ -143,9 +143,17 @@ function Index() {
       <div className="divide-y divide-primary/20 rounded-lg border border-primary/20 bg-surface-dark-soft p-2">{lessons.map((lesson) => <div key={lesson} className="flex items-center gap-3 px-4 py-3 text-sm"><span className="grid size-7 shrink-0 place-items-center rounded-full bg-primary/15"><Play className="size-3 text-primary"/></span>{lesson}</div>)}</div>
     </div></section>
 
-    <section className="py-16 md:py-24"><div className="mx-auto max-w-7xl px-5 md:px-8"><SectionHeading eyebrow="Exclusivo do Plano Profissional" title="10 bônus para complementar sua formação" text="Materiais práticos para estudar, consultar e acompanhar sua evolução." />
-      <div className="mx-auto max-w-5xl overflow-hidden rounded-lg border border-border bg-card shadow-xl">
-        <img src="/bonus-mecanica-motos.webp" alt="10 bônus exclusivos da Formação Mecânico de Motos" className="block w-full" loading="lazy" />
+    <section className="py-14 md:py-20"><div className="mx-auto max-w-7xl px-4 md:px-8"><SectionHeading eyebrow="Exclusivo do Plano Profissional" title="10 bônus para complementar sua formação" text="Materiais práticos para estudar, consultar e acompanhar sua evolução." />
+      <div className="mx-auto w-full max-w-[460px] overflow-hidden rounded-xl border border-border bg-card shadow-lg">
+        <img
+          src="/bonus-mecanica-motos.png"
+          alt="10 bônus exclusivos da Formação Mecânico de Motos"
+          className="block h-auto w-full object-contain"
+          loading="lazy"
+          decoding="async"
+          width="1254"
+          height="1254"
+        />
       </div>
     </div></section>
 
