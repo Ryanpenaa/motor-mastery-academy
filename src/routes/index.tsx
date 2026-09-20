@@ -144,7 +144,9 @@ function Index() {
     </div></section>
 
     <section className="py-16 md:py-24"><div className="mx-auto max-w-7xl px-5 md:px-8"><SectionHeading eyebrow="Exclusivo do Plano Profissional" title="10 bônus para complementar sua formação" text="Materiais práticos para estudar, consultar e acompanhar sua evolução." />
-      <div className="grid gap-4 md:grid-cols-2">{bonuses.map(([n,title,text]) => <article key={n} className="flex gap-5 rounded-lg border border-border bg-card p-5"><span className="font-display text-4xl font-extrabold text-primary">{n}</span><div><p className="text-xs font-bold uppercase text-primary">Bônus {n}</p><h3 className="text-lg font-bold uppercase">{title}</h3><p className="mt-1 text-sm leading-6 text-muted-foreground">{text}</p></div></article>)}</div>
+      <div className="mx-auto max-w-5xl overflow-hidden rounded-lg border border-border bg-card shadow-xl">
+        <img src="/bonus-mecanica-motos.webp" alt="10 bônus exclusivos da Formação Mecânico de Motos" className="block w-full" loading="lazy" />
+      </div>
     </div></section>
 
     <section id="planos" className="scroll-mt-4 bg-muted py-16 md:py-24"><div className="mx-auto max-w-5xl px-5 md:px-8"><SectionHeading eyebrow="Planos" title="Escolha como quer começar" text="Dois caminhos para iniciar hoje mesmo." />
