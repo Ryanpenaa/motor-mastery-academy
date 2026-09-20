@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Award, Check, ChevronRight, Clock3, Cog, GraduationCap, Laptop, Play,
@@ -77,73 +78,75 @@ const courseSamples = [
   { title: "Diagnóstico de defeitos", src: "/amostras/10-diagnostico-defeitos.png" },
 ] as const;
 
-const infiniteSamples = [...courseSamples, ...courseSamples, ...courseSamples];
-
 function CourseSamplesCarousel() {
-  const total = courseSamples.length;
-  const [position, setPosition] = useState(total);
-  const [animated, setAnimated] = useState(true);
+  const [viewportRef, carousel] = useEmblaCarousel({
+    align: "center",
+    loop: true,
+    duration: 35,
+  });
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
+    if (!carousel) return;
+
+    const syncActiveIndex = () => setActiveIndex(carousel.selectedScrollSnap());
+    syncActiveIndex();
+    carousel.on("select", syncActiveIndex);
+    carousel.on("reInit", syncActiveIndex);
+
     const interval = window.setInterval(() => {
-      setAnimated(true);
-      setPosition((current) => current + 1);
+      if (!document.hidden) carousel.scrollNext();
     }, 2000);
 
-    return () => window.clearInterval(interval);
-  }, []);
-
-  const handleTransitionEnd = () => {
-    if (position >= total * 2) {
-      setAnimated(false);
-      setPosition(total);
-      window.requestAnimationFrame(() => {
-        window.requestAnimationFrame(() => setAnimated(true));
-      });
-    }
-  };
-
-  const activeIndex = ((position % total) + total) % total;
+    return () => {
+      window.clearInterval(interval);
+      carousel.off("select", syncActiveIndex);
+      carousel.off("reInit", syncActiveIndex);
+    };
+  }, [carousel]);
 
   return (
-    <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden py-3">
-      <div
-        className={`flex items-center gap-3 ${animated ? "transition-transform duration-700 ease-out" : ""}`}
-        style={{
-          transform: `translateX(calc(50vw - 39vw - ${position} * (78vw + 12px)))`,
-        }}
-        onTransitionEnd={handleTransitionEnd}
-      >
-        {infiniteSamples.map((sample, index) => {
-          const distance = Math.abs(index - position);
-          const isActive = distance === 0;
-
-          return (
+    <div
+      className="relative left-1/2 w-screen -translate-x-1/2 py-3"
+      role="region"
+      aria-roledescription="carrossel"
+      aria-label="Conteúdo da formação"
+    >
+      <div ref={viewportRef} className="mx-auto max-w-[904px] overflow-hidden">
+        <div className="flex touch-pan-y items-center gap-3">
+          {courseSamples.map((sample, index) => (
             <article
-              key={`${sample.src}-${index}`}
-              className={`w-[78vw] max-w-[400px] shrink-0 overflow-hidden rounded-2xl border bg-white shadow-xl transition-all duration-700 ${
-                isActive
-                  ? "scale-100 border-primary/40 opacity-100"
-                  : "scale-[0.82] border-border opacity-60"
+              key={sample.src}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${index + 1} de ${courseSamples.length}: ${sample.title}`}
+              className={`min-w-0 shrink-0 grow-0 overflow-hidden rounded-2xl border bg-white transition-opacity duration-700 ${
+                index === activeIndex
+                  ? "border-primary/40 opacity-100"
+                  : "border-border opacity-60"
               }`}
+              // viewport = one full slide + 60% of each neighbor + two gaps.
+              // Cap the viewport, not individual slides, so sizing stays consistent.
+              style={{ flexBasis: "calc((100% - 24px) / 2.2)" }}
             >
               <img
                 src={sample.src}
                 alt={sample.title}
                 className="block h-auto w-full"
-                loading={index < total + 2 ? "eager" : "lazy"}
+                loading="eager"
                 decoding="async"
+                draggable={false}
               />
             </article>
-          );
-        })}
+          ))}
+        </div>
       </div>
 
       <p className="mt-4 text-center text-sm font-extrabold uppercase text-foreground">
         {courseSamples[activeIndex].title}
       </p>
 
-      <div className="mt-3 flex justify-center gap-1.5">
+      <div className="mt-3 flex justify-center gap-1.5" aria-hidden="true">
         {courseSamples.map((sample, index) => (
           <span
             key={sample.src}
