@@ -144,15 +144,15 @@ function Index() {
     </div></section>
 
     <section className="py-14 md:py-20"><div className="mx-auto max-w-7xl px-4 md:px-8"><SectionHeading eyebrow="Exclusivo do Plano Profissional" title="10 bônus para complementar sua formação" text="Materiais práticos para estudar, consultar e acompanhar sua evolução." />
-      <div className="mx-auto w-full max-w-[460px] overflow-hidden rounded-xl border border-border bg-card shadow-lg">
+      <div className="mx-auto w-full max-w-[360px] overflow-hidden rounded-xl border border-border bg-card shadow-lg sm:max-w-[420px]">
         <img
-          src="/bonus-mecanica-motos.png"
+          src="/bonus-mecanica-motos-mobile.jpg"
           alt="10 bônus exclusivos da Formação Mecânico de Motos"
           className="block h-auto w-full object-contain"
           loading="lazy"
           decoding="async"
-          width="1254"
-          height="1254"
+          width="360"
+          height="360"
         />
       </div>
     </div></section>
