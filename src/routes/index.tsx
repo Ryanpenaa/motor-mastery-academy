@@ -65,87 +65,94 @@ const audiences = [
 ];
 
 const courseSamples = [
-  "Motor de motos",
-  "Sistema de alimentação",
-  "Injeção eletrônica",
-  "Sistema elétrico",
-  "Sistema de freios",
-  "Suspensão de motos",
-  "Embreagem de motos",
-  "Transmissão final",
-  "Manutenção preventiva",
-  "Diagnóstico de defeitos",
+  { title: "Motor de motos", src: "/amostras/01-motor-de-motos.png" },
+  { title: "Sistema de alimentação", src: "/amostras/02-sistema-alimentacao.png" },
+  { title: "Injeção eletrônica", src: "/amostras/03-injecao-eletronica.png" },
+  { title: "Sistema elétrico", src: "/amostras/04-sistema-eletrico.png" },
+  { title: "Sistema de freios", src: "/amostras/05-sistema-freios.png" },
+  { title: "Suspensão de motos", src: "/amostras/06-suspensao.png" },
+  { title: "Embreagem de motos", src: "/amostras/07-embreagem.png" },
+  { title: "Transmissão final", src: "/amostras/08-transmissao-final.png" },
+  { title: "Manutenção preventiva", src: "/amostras/09-manutencao-preventiva.png" },
+  { title: "Diagnóstico de defeitos", src: "/amostras/10-diagnostico-defeitos.png" },
 ] as const;
 
+const infiniteSamples = [...courseSamples, ...courseSamples, ...courseSamples];
+
 function CourseSamplesCarousel() {
-  const [active, setActive] = useState(0);
+  const total = courseSamples.length;
+  const [position, setPosition] = useState(total);
+  const [animated, setAnimated] = useState(true);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setActive((current) => (current + 1) % courseSamples.length);
-    }, 3500);
+      setAnimated(true);
+      setPosition((current) => current + 1);
+    }, 2000);
+
     return () => window.clearInterval(interval);
   }, []);
 
-  const previous = () => setActive((current) => (current - 1 + courseSamples.length) % courseSamples.length);
-  const next = () => setActive((current) => (current + 1) % courseSamples.length);
+  const handleTransitionEnd = () => {
+    if (position >= total * 2) {
+      setAnimated(false);
+      setPosition(total);
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => setAnimated(true));
+      });
+    }
+  };
+
+  const activeIndex = ((position % total) + total) % total;
 
   return (
-    <div className="mx-auto max-w-md">
-      <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
-        <div className="relative aspect-[2/3] w-full bg-white">
-          <div
-            role="img"
-            aria-label={courseSamples[active]}
-            className="absolute inset-0 bg-no-repeat"
-            style={{
-              backgroundImage: 'url("/amostras-conteudo-mecanica-motos.jpg")',
-              backgroundSize: "100% 1000%",
-              backgroundPosition: `center ${(active * 100) / (courseSamples.length - 1)}%`,
-            }}
-          />
-        </div>
+    <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden py-3">
+      <div
+        className={`flex items-center gap-3 ${animated ? "transition-transform duration-700 ease-out" : ""}`}
+        style={{
+          transform: `translateX(calc(50vw - 39vw - ${position} * (78vw + 12px)))`,
+        }}
+        onTransitionEnd={handleTransitionEnd}
+      >
+        {infiniteSamples.map((sample, index) => {
+          const distance = Math.abs(index - position);
+          const isActive = distance === 0;
 
-        <button
-          type="button"
-          onClick={previous}
-          aria-label="Amostra anterior"
-          className="absolute left-2 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-black/65 text-white shadow-md backdrop-blur transition hover:bg-black/80"
-        >
-          <ChevronRight className="size-5 rotate-180" />
-        </button>
-
-        <button
-          type="button"
-          onClick={next}
-          aria-label="Próxima amostra"
-          className="absolute right-2 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-black/65 text-white shadow-md backdrop-blur transition hover:bg-black/80"
-        >
-          <ChevronRight className="size-5" />
-        </button>
+          return (
+            <article
+              key={`${sample.src}-${index}`}
+              className={`w-[78vw] max-w-[400px] shrink-0 overflow-hidden rounded-2xl border bg-white shadow-xl transition-all duration-700 ${
+                isActive
+                  ? "scale-100 border-primary/40 opacity-100"
+                  : "scale-[0.82] border-border opacity-60"
+              }`}
+            >
+              <img
+                src={sample.src}
+                alt={sample.title}
+                className="block h-auto w-full"
+                loading={index < total + 2 ? "eager" : "lazy"}
+                decoding="async"
+              />
+            </article>
+          );
+        })}
       </div>
 
-      <p className="mt-4 text-center text-sm font-bold uppercase text-foreground">
-        {courseSamples[active]}
+      <p className="mt-4 text-center text-sm font-extrabold uppercase text-foreground">
+        {courseSamples[activeIndex].title}
       </p>
 
-      <div className="mt-4 flex justify-center gap-2">
-        {courseSamples.map((item, index) => (
-          <button
-            key={item}
-            type="button"
-            onClick={() => setActive(index)}
-            aria-label={`Ver amostra ${index + 1}: ${item}`}
-            className={`h-2.5 rounded-full transition-all ${
-              active === index ? "w-7 bg-primary" : "w-2.5 bg-border hover:bg-muted-foreground/40"
+      <div className="mt-3 flex justify-center gap-1.5">
+        {courseSamples.map((sample, index) => (
+          <span
+            key={sample.src}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              activeIndex === index ? "w-6 bg-primary" : "w-2 bg-border"
             }`}
           />
         ))}
       </div>
-
-      <p className="mx-auto mt-5 max-w-sm text-center text-xs leading-5 text-muted-foreground">
-        Arraste visualmente pelas amostras ou use as setas. O carrossel avança automaticamente.
-      </p>
     </div>
   );
 }
