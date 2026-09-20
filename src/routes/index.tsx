@@ -106,15 +106,18 @@ function Index() {
 
     <section id="inicio" className="relative overflow-hidden bg-surface-dark text-surface-dark-foreground">
       <div className="absolute inset-x-0 bottom-0 h-px bg-primary/30" />
-      <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 pb-14 pt-8 md:min-h-[650px] md:grid-cols-[0.9fr_1.1fr] md:px-8 md:py-16">
-        <div className="relative z-10">
+      <div className="mx-auto flex max-w-5xl flex-col items-center px-5 pb-14 pt-8 text-center md:min-h-[650px] md:px-8 md:py-16">
+        <div className="relative z-10 flex w-full flex-col items-center">
           <p className="mb-5 inline-flex items-center gap-2 border-l-4 border-primary pl-3 text-xs font-extrabold uppercase tracking-widest text-primary">Formação profissionalizante online</p>
-          <h1 className="max-w-2xl text-5xl font-extrabold uppercase leading-[0.94] md:text-7xl">Torne-se um <span className="text-primary">Mecânico de Motos</span>: do zero ao avançado</h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-steel md:text-lg">Curso 100% online com mais de 80 videoaulas práticas sobre motor, elétrica, injeção, freios, suspensão e diagnóstico de motos.</p>
+          <h1 className="max-w-4xl text-5xl font-extrabold uppercase leading-[0.94] md:text-7xl">Torne-se um <span className="text-primary">Mecânico de Motos</span>: do zero ao avançado</h1>
+          <div className="relative mt-6 w-full max-w-3xl">
+            <div className="absolute inset-8 rounded-full bg-primary/20 blur-3xl" />
+            <img src={mockup.url} alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 w-full object-contain drop-shadow-2xl" />
+          </div>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-steel md:text-lg">Curso 100% online com mais de 80 videoaulas práticas sobre motor, elétrica, injeção, freios, suspensão e diagnóstico de motos.</p>
           <div className="mt-8"><Cta /></div>
           <TrustLine />
         </div>
-        <div className="relative"><div className="absolute inset-8 rounded-full bg-primary/20 blur-3xl" /><img src={mockup.url} alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 w-full object-contain drop-shadow-2xl" /></div>
       </div>
     </section>
 
