@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  Award, Check, ChevronRight, Clock3, Cog, GraduationCap, Laptop, Play,
+  Award, Check, ChevronRight, Clock3, GraduationCap, Laptop, Play,
   ShieldCheck, Smartphone, Star, TabletSmartphone, Wrench,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -167,13 +167,6 @@ function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: stri
 
 function Index() {
   return <main className="min-h-screen bg-background">
-    <header className="bg-surface-dark text-surface-dark-foreground">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
-        <a href="#inicio" className="flex items-center gap-3 font-display text-xl font-extrabold uppercase"><span className="grid size-9 place-items-center rounded-md bg-primary"><Cog className="size-5" /></span><span>Moto <span className="text-primary">Expert</span></span></a>
-        <a href="#planos" className="text-sm font-bold text-primary hover:text-accent">Ver planos</a>
-      </div>
-    </header>
-
     <section id="inicio" className="relative overflow-hidden bg-surface-dark text-surface-dark-foreground">
       <div className="absolute inset-x-0 bottom-0 h-px bg-primary/30" />
       <div className="mx-auto flex max-w-5xl flex-col items-center px-5 pb-14 pt-8 text-center md:min-h-[650px] md:px-8 md:py-16">
@@ -181,8 +174,9 @@ function Index() {
           <p className="mb-5 inline-flex items-center gap-2 border-l-4 border-primary pl-3 text-xs font-extrabold uppercase tracking-widest text-primary">Formação profissionalizante online</p>
           <h1 className="max-w-4xl text-5xl font-extrabold uppercase leading-[0.94] md:text-7xl">Torne-se um <span className="text-primary">Mecânico de Motos</span>: do zero ao avançado</h1>
           <div className="relative mt-6 w-full max-w-3xl">
-            <div className="absolute inset-8 rounded-full bg-primary/20 blur-3xl" />
-            <img src="/mockup-transparente.png" alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 w-full object-contain drop-shadow-2xl" />
+            <div className="absolute inset-8 rounded-full bg-primary/20 blur-3xl" aria-hidden="true" />
+            <div className="absolute inset-x-[5%] bottom-0 h-[14%] rounded-xl border border-primary/20 bg-sky-50 shadow-lg" aria-hidden="true" />
+            <img width="1254" height="1254" src="/mockup-transparente.png" alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 w-full object-contain drop-shadow-2xl" />
           </div>
           <p className="mt-6 max-w-2xl text-base leading-7 text-steel md:text-lg">Curso 100% online com mais de 80 videoaulas práticas sobre motor, elétrica, injeção, freios, suspensão e diagnóstico de motos.</p>
           <div className="mt-8"><Cta /></div>
