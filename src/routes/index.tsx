@@ -7,7 +7,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import mockup from "@/assets/formacao-mecanico-motos-mockup.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
@@ -183,7 +182,7 @@ function Index() {
           <h1 className="max-w-4xl text-5xl font-extrabold uppercase leading-[0.94] md:text-7xl">Torne-se um <span className="text-primary">Mecânico de Motos</span>: do zero ao avançado</h1>
           <div className="relative mt-6 w-full max-w-3xl">
             <div className="absolute inset-8 rounded-full bg-primary/20 blur-3xl" />
-            <img src={mockup.url} alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 w-full object-contain drop-shadow-2xl" />
+            <img src="/mockup-transparente.png" alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 w-full object-contain drop-shadow-2xl" />
           </div>
           <p className="mt-6 max-w-2xl text-base leading-7 text-steel md:text-lg">Curso 100% online com mais de 80 videoaulas práticas sobre motor, elétrica, injeção, freios, suspensão e diagnóstico de motos.</p>
           <div className="mt-8"><Cta /></div>
@@ -207,13 +206,13 @@ function Index() {
     <section className="py-14 md:py-20"><div className="mx-auto max-w-7xl px-4 md:px-8"><SectionHeading eyebrow="Exclusivo do Plano Profissional" title="10 bônus para complementar sua formação" text="Materiais práticos para estudar, consultar e acompanhar sua evolução." />
       <div className="mx-auto w-full max-w-[360px] overflow-hidden rounded-xl border border-border bg-card shadow-lg">
         <img
-          src="/bonus-mecanica-motos-mobile.jpg"
+          src="/bonus-mecanica-motos-original.png"
           alt="10 bônus exclusivos da Formação Mecânico de Motos"
           className="block h-auto w-full object-contain"
           loading="lazy"
           decoding="async"
-          width="360"
-          height="360"
+          width="1254"
+          height="1254"
         />
       </div>
     </div></section>
