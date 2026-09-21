@@ -21,12 +21,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const support = [
-  "Apostila de Mecânica de Motos", "Tabela de Torques e Especificações", "Checklist de Revisão Preventiva",
-  "Guia de Diagnóstico de Defeitos", "Manual de Ferramentas do Mecânico de Motos", "Guia de Sistema Elétrico",
-  "Guia de Injeção Eletrônica", "Guia de Freios e Suspensão", "Guia de Transmissão e Relação",
-];
-
 const lessons = [
   "Aula 01 — Fundamentos da motocicleta", "Aula 08 — Funcionamento do motor", "Aula 15 — Desmontagem do motor",
   "Aula 23 — Sistema elétrico da moto", "Aula 31 — Injeção eletrônica", "Aula 39 — Sistema de freios",
@@ -201,10 +195,6 @@ function Index() {
     <section className="py-14 md:py-20"><div className="mx-auto max-w-7xl px-4 md:px-8"><SectionHeading eyebrow="Conteúdo da formação" title="O que você vai aprender" text="Uma base prática para entender os sistemas de uma motocicleta e os serviços realizados no dia a dia de uma oficina." />
       <CourseSamplesCarousel />
       <p className="mx-auto mt-8 max-w-2xl text-center font-semibold">Veja exemplos reais do conteúdo visual que acompanha sua formação.</p>
-    </div></section>
-
-    <section className="bg-muted py-16 md:py-24"><div className="mx-auto max-w-7xl px-5 md:px-8"><SectionHeading eyebrow="Material de apoio" title="Materiais para estudar e consultar" text="Guias, manuais e checklists ilustrados para complementar suas aulas." />
-      <div className="grid gap-3 md:grid-cols-3">{support.map((item) => <div key={item} className="flex items-start gap-3 rounded-md border border-border bg-card p-4 text-sm font-bold"><Check className="mt-0.5 size-5 shrink-0 text-primary" />{item}</div>)}</div>
     </div></section>
 
     <section className="overflow-hidden bg-surface-dark py-16 text-surface-dark-foreground md:py-24"><div className="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-2 md:px-8">
