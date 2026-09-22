@@ -9,7 +9,7 @@ type BasicPlanOfferProps = {
 
 export function BasicPlanOffer({ basicCheckoutUrl, completeCheckoutUrl }: BasicPlanOfferProps) {
   return (
-    <Dialog>
+    <Dialog onOpenChange={(open) => window.dispatchEvent(new CustomEvent("moto:offer", { detail: { open } }))}>
       <DialogTrigger asChild>
         <Button variant="salesOutline" size="xl" className="mt-auto">
           Começar pelo básico

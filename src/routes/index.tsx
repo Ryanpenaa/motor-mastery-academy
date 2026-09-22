@@ -168,7 +168,7 @@ function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: stri
 
 function Index() {
   return <main className="min-h-screen bg-background">
-    <section id="inicio" className="relative overflow-hidden bg-surface-dark text-surface-dark-foreground">
+    <section data-meta-section="inicio" id="inicio" className="relative overflow-hidden bg-surface-dark text-surface-dark-foreground">
       <div className="absolute inset-x-0 bottom-0 h-px bg-primary/30" />
       <div className="mx-auto flex max-w-5xl flex-col items-center px-5 pb-14 pt-8 text-center md:min-h-[650px] md:px-8 md:py-16">
         <div className="relative z-10 flex w-full flex-col items-center">
@@ -186,19 +186,19 @@ function Index() {
       </div>
     </section>
 
-    <section className="py-14 md:py-20"><div className="mx-auto max-w-7xl px-4 md:px-8"><SectionHeading eyebrow="Conteúdo da formação" title="O que você vai aprender" text="Uma base prática para entender os sistemas de uma motocicleta e os serviços realizados no dia a dia de uma oficina." />
+    <section data-meta-section="conteudo" className="py-14 md:py-20"><div className="mx-auto max-w-7xl px-4 md:px-8"><SectionHeading eyebrow="Conteúdo da formação" title="O que você vai aprender" text="Uma base prática para entender os sistemas de uma motocicleta e os serviços realizados no dia a dia de uma oficina." />
       <CourseSamplesCarousel />
       <p className="mx-auto mt-8 max-w-2xl text-center font-semibold">Veja exemplos reais do conteúdo visual que acompanha sua formação.</p>
     </div></section>
 
-    <section className="overflow-hidden bg-surface-dark py-16 text-surface-dark-foreground md:py-24"><div className="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-2 md:px-8">
+    <section data-meta-section="plataforma" className="overflow-hidden bg-surface-dark py-16 text-surface-dark-foreground md:py-24"><div className="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-2 md:px-8">
       <div><p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-primary">Plataforma</p><h2 className="text-4xl font-extrabold uppercase md:text-5xl">Estude no seu ritmo, de onde estiver</h2><p className="mt-5 leading-7 text-steel">Aulas organizadas por módulos, progresso salvo e materiais para consultar pelo celular, tablet ou computador.</p>
         <div className="mt-8 flex gap-6"><span className="flex items-center gap-2 text-sm"><Smartphone className="text-primary"/> Celular</span><span className="flex items-center gap-2 text-sm"><TabletSmartphone className="text-primary"/> Tablet</span><span className="flex items-center gap-2 text-sm"><Laptop className="text-primary"/> Computador</span></div>
       </div>
       <div className="divide-y divide-primary/20 rounded-lg border border-primary/20 bg-surface-dark-soft p-2">{lessons.map((lesson) => <div key={lesson} className="flex items-center gap-3 px-4 py-3 text-sm"><span className="grid size-7 shrink-0 place-items-center rounded-full bg-primary/15"><Play className="size-3 text-primary"/></span>{lesson}</div>)}</div>
     </div></section>
 
-    <section className="py-14 md:py-20"><div className="mx-auto max-w-7xl px-4 md:px-8"><SectionHeading eyebrow="Exclusivo do Plano Profissional" title="10 bônus para complementar sua formação" text="Materiais práticos para estudar, consultar e acompanhar sua evolução." />
+    <section data-meta-section="bonus" className="py-14 md:py-20"><div className="mx-auto max-w-7xl px-4 md:px-8"><SectionHeading eyebrow="Exclusivo do Plano Profissional" title="10 bônus para complementar sua formação" text="Materiais práticos para estudar, consultar e acompanhar sua evolução." />
       <div className="mx-auto w-full max-w-[360px] overflow-hidden rounded-xl border border-border bg-card shadow-lg">
         <img
           src="/bonus-mecanica-motos-original.png"
@@ -212,18 +212,18 @@ function Index() {
       </div>
     </div></section>
 
-    <section id="planos" className="scroll-mt-4 bg-muted py-16 md:py-24"><div className="mx-auto max-w-5xl px-5 md:px-8"><SectionHeading eyebrow="Planos" title="Escolha como quer começar" text="Dois caminhos para iniciar hoje mesmo." />
+    <section data-meta-section="planos" id="planos" className="scroll-mt-4 bg-muted py-16 md:py-24"><div className="mx-auto max-w-5xl px-5 md:px-8"><SectionHeading eyebrow="Planos" title="Escolha como quer começar" text="Dois caminhos para iniciar hoje mesmo." />
       <div className="grid items-stretch gap-6 md:grid-cols-2">
         <article className="flex flex-col rounded-lg border border-border bg-card p-7"><p className="text-sm font-bold text-muted-foreground">Para quem quer começar</p><h3 className="mt-1 text-3xl font-extrabold uppercase">Plano Básico</h3><p className="my-7 font-display text-5xl font-extrabold">R$ 10,00</p><ul className="mb-8 space-y-3">{["80+ aulas em vídeo","Conteúdo 100% online","Acesso vitalício"].map(x=><li className="flex gap-2 text-sm" key={x}><Check className="size-5 text-primary"/>{x}</li>)}</ul><BasicPlanOffer basicCheckoutUrl="https://checkout.kitpro.store/VCCL1O8SD9G1" completeCheckoutUrl="https://checkout.kitpro.store/VCCL1O8SD9G2" /></article>
         <article className="relative flex flex-col rounded-lg border-2 border-primary bg-card p-7 shadow-xl"><span className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1.5 text-xs font-extrabold uppercase text-primary-foreground">Mais vendido</span><p className="text-sm font-bold text-muted-foreground">Formação completa + materiais</p><h3 className="mt-1 text-3xl font-extrabold uppercase">Plano Profissional</h3><p className="my-7 font-display text-5xl font-extrabold">R$ 27,90</p><ul className="mb-6 space-y-3">{["80+ aulas em vídeo","Certificado de conclusão","Acesso vitalício","Materiais de apoio","10 bônus exclusivos"].map(x=><li className="flex gap-2 text-sm font-semibold" key={x}><Check className="size-5 text-primary"/>{x}</li>)}</ul><div className="mb-6 rounded-md bg-muted p-4 text-sm leading-6"><strong>Por apenas R$ 17,90 a mais</strong> você leva certificado, materiais, guias e todos os bônus.</div><Button variant="sales" size="xl" asChild><a href="https://checkout.kitpro.store/VCCL1O8SD9G3">Quero o Plano Profissional</a></Button></article>
       </div><TrustLine />
     </div></section>
 
-    <section className="py-16 md:py-24"><div className="mx-auto max-w-7xl px-5 md:px-8"><SectionHeading eyebrow="Para quem é" title="Comece do seu ponto de partida" text="Uma formação pensada para diferentes objetivos na mecânica de motocicletas." />
+    <section data-meta-section="publico" className="py-16 md:py-24"><div className="mx-auto max-w-7xl px-5 md:px-8"><SectionHeading eyebrow="Para quem é" title="Comece do seu ponto de partida" text="Uma formação pensada para diferentes objetivos na mecânica de motocicletas." />
       <div className="grid gap-4 md:grid-cols-3">{audiences.map(({ Icon,title,text })=><article key={title} className="border-l-4 border-primary bg-muted p-6"><Icon className="mb-4 size-7 text-primary"/><h3 className="text-xl font-bold uppercase">{title}</h3><p className="mt-2 text-sm text-muted-foreground">{text}</p></article>)}</div>
     </div></section>
 
-    <section className="bg-surface-dark py-16 text-surface-dark-foreground md:py-24"><div className="mx-auto grid max-w-7xl items-center gap-12 px-5 md:grid-cols-2 md:px-8"><div><p className="text-xs font-extrabold uppercase tracking-widest text-primary">Uma habilidade profissional</p><h2 className="mt-3 text-4xl font-extrabold uppercase md:text-5xl">Motos estão em todos os lugares</h2><p className="mt-5 leading-7 text-steel">Utilizadas para trabalho, transporte e lazer. Desenvolva uma base prática para entender manutenção, identificar defeitos e começar a buscar oportunidades.</p><div className="mt-7"><Cta /></div></div><div className="grid gap-4 sm:grid-cols-2"><div className="rounded-lg border border-primary/20 bg-surface-dark-soft p-6 sm:col-span-2"><Award className="mb-5 size-9 text-primary"/><h3 className="text-2xl font-bold uppercase">Certificado digital</h3><p className="mt-3 text-sm leading-6 text-steel">Incluído no Plano Profissional após a conclusão da formação.</p></div><div className="relative overflow-hidden rounded-2xl border border-accent/40 bg-surface-dark-soft p-6 shadow-xl sm:col-span-2 sm:p-8">
+    <section data-meta-section="garantia" className="bg-surface-dark py-16 text-surface-dark-foreground md:py-24"><div className="mx-auto grid max-w-7xl items-center gap-12 px-5 md:grid-cols-2 md:px-8"><div><p className="text-xs font-extrabold uppercase tracking-widest text-primary">Uma habilidade profissional</p><h2 className="mt-3 text-4xl font-extrabold uppercase md:text-5xl">Motos estão em todos os lugares</h2><p className="mt-5 leading-7 text-steel">Utilizadas para trabalho, transporte e lazer. Desenvolva uma base prática para entender manutenção, identificar defeitos e começar a buscar oportunidades.</p><div className="mt-7"><Cta /></div></div><div className="grid gap-4 sm:grid-cols-2"><div className="rounded-lg border border-primary/20 bg-surface-dark-soft p-6 sm:col-span-2"><Award className="mb-5 size-9 text-primary"/><h3 className="text-2xl font-bold uppercase">Certificado digital</h3><p className="mt-3 text-sm leading-6 text-steel">Incluído no Plano Profissional após a conclusão da formação.</p></div><div className="relative overflow-hidden rounded-2xl border border-accent/40 bg-surface-dark-soft p-6 shadow-xl sm:col-span-2 sm:p-8">
           <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
             <div className="relative grid size-28 shrink-0 place-items-center rounded-full border-2 border-accent/60 bg-accent/10">
               <ShieldCheck className="absolute inset-0 m-auto size-24 text-accent/20" aria-hidden="true" />
@@ -240,13 +240,13 @@ function Index() {
           </div>
         </div></div></div></section>
 
-    <section className="py-16 md:py-24"><div className="mx-auto grid max-w-5xl items-center gap-10 px-5 md:grid-cols-[0.7fr_1.3fr] md:px-8"><div className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-border bg-secondary shadow-xl">
+    <section data-meta-section="instrutor" className="py-16 md:py-24"><div className="mx-auto grid max-w-5xl items-center gap-10 px-5 md:grid-cols-[0.7fr_1.3fr] md:px-8"><div className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-border bg-secondary shadow-xl">
           <img src="/instrutor-mecanica-motos.png" alt="Apresentador da formação em uma oficina de motocicletas" width="1122" height="1402" className="block h-auto w-full" loading="lazy" decoding="async" />
         </div><div><p className="text-xs font-extrabold uppercase tracking-widest text-primary">Quem sou eu</p><h2 className="mt-2 text-5xl font-extrabold uppercase">João Emanuel</h2><p className="mt-5 leading-7 text-muted-foreground">Profissional da área de mecânica com experiência prática em manutenção e diagnóstico. Apresenta os conteúdos de maneira simples, direta e passo a passo, especialmente para quem começa do zero.</p><div className="mt-6 flex flex-wrap gap-3">{["Experiência prática","Conteúdo objetivo","Ensino passo a passo"].map(x=><span key={x} className="flex items-center gap-2 rounded-md bg-muted px-3 py-2 text-xs font-bold"><Check className="size-4 text-primary"/>{x}</span>)}</div></div></div></section>
 
-    <section className="bg-muted py-16 md:py-24"><div className="mx-auto max-w-3xl px-5 md:px-8"><SectionHeading eyebrow="Dúvidas" title="Perguntas frequentes" /><Accordion type="single" collapsible className="rounded-lg border border-border bg-card px-6">{faqs.map(([q,a],i)=><AccordionItem value={`q-${i}`} key={q}><AccordionTrigger className="text-base font-bold">{q}</AccordionTrigger><AccordionContent className="leading-6 text-muted-foreground">{a}</AccordionContent></AccordionItem>)}</Accordion></div></section>
+    <section data-meta-section="duvidas" className="bg-muted py-16 md:py-24"><div className="mx-auto max-w-3xl px-5 md:px-8"><SectionHeading eyebrow="Dúvidas" title="Perguntas frequentes" /><Accordion type="single" collapsible className="rounded-lg border border-border bg-card px-6">{faqs.map(([q,a],i)=><AccordionItem value={`q-${i}`} key={q}><AccordionTrigger className="text-base font-bold">{q}</AccordionTrigger><AccordionContent className="leading-6 text-muted-foreground">{a}</AccordionContent></AccordionItem>)}</Accordion></div></section>
 
-    <section className="bg-primary py-16 text-center text-primary-foreground md:py-20"><div className="mx-auto max-w-3xl px-5"><Clock3 className="mx-auto mb-5 size-10"/><h2 className="text-4xl font-extrabold uppercase md:text-5xl">Comece hoje a desenvolver uma nova habilidade</h2><p className="mx-auto mt-4 max-w-xl">Acesse a Formação Mecânico de Motos e comece suas primeiras aulas.</p><div className="mt-7"><Button size="xl" variant="secondary" asChild><a href="#planos">Quero começar agora<ChevronRight /></a></Button></div><p className="mt-4 text-xs font-semibold">Acesso imediato • Acesso vitalício • Garantia de 7 dias</p></div></section>
+    <section data-meta-section="cta_final" className="bg-primary py-16 text-center text-primary-foreground md:py-20"><div className="mx-auto max-w-3xl px-5"><Clock3 className="mx-auto mb-5 size-10"/><h2 className="text-4xl font-extrabold uppercase md:text-5xl">Comece hoje a desenvolver uma nova habilidade</h2><p className="mx-auto mt-4 max-w-xl">Acesse a Formação Mecânico de Motos e comece suas primeiras aulas.</p><div className="mt-7"><Button size="xl" variant="secondary" asChild><a href="#planos">Quero começar agora<ChevronRight /></a></Button></div><p className="mt-4 text-xs font-semibold">Acesso imediato • Acesso vitalício • Garantia de 7 dias</p></div></section>
     <footer className="bg-surface-dark px-5 py-8 text-center text-xs text-steel">© 2026 Formação Mecânico de Motos. Todos os direitos reservados.</footer>
   </main>;
 }

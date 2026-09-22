@@ -120,6 +120,15 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    if (document.getElementById("moto-meta-pixel")) return;
+    const script = document.createElement("script");
+    script.id = "moto-meta-pixel";
+    script.src = "/meta-pixel.js";
+    script.async = true;
+    document.head.appendChild(script);
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
