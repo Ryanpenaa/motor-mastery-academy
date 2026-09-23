@@ -78,6 +78,9 @@ jobs:
         run: |
           du -h public/mockup-transparente.webp public/instrutor-mecanica-motos.webp public/amostras/*.webp
 
+      - name: Verify production build
+        run: npm run build
+
       - name: Commit optimized assets
         run: |
           git config user.name "github-actions[bot]"
