@@ -87,13 +87,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "preload", href: "/mockup-transparente.png", as: "image", fetchPriority: "high" },
       {
         rel: "stylesheet",
         href: appCss,
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Manrope:wght@400;600;700;800&display=swap" },
       { rel: "icon", href: "/favicon-mecanica.svg", type: "image/svg+xml", sizes: "any" },
     ],
   }),
@@ -105,7 +106,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
       </head>
@@ -121,12 +122,27 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   useEffect(() => {
-    if (document.getElementById("moto-meta-pixel")) return;
-    const script = document.createElement("script");
-    script.id = "moto-meta-pixel";
-    script.src = "/meta-pixel.js";
-    script.async = true;
-    document.head.appendChild(script);
+    let cancelled = false;
+
+    const loadPixel = () => {
+      if (cancelled || document.getElementById("moto-meta-pixel")) return;
+      const script = document.createElement("script");
+      script.id = "moto-meta-pixel";
+      script.src = "/meta-pixel.js";
+      script.async = true;
+      document.head.appendChild(script);
+    };
+
+    if (document.readyState === "complete") {
+      window.setTimeout(loadPixel, 0);
+    } else {
+      window.addEventListener("load", loadPixel, { once: true });
+    }
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener("load", loadPixel);
+    };
   }, []);
 
   return (
