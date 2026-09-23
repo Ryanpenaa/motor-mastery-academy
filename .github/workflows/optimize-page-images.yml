@@ -1,0 +1,88 @@
+name: Optimize sales page images once
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/optimize-page-images.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  optimize-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install image optimizer
+        run: npm install --no-save --package-lock=false sharp
+
+      - name: Generate responsive WebP assets
+        run: |
+          node --input-type=module <<'NODE'
+          import sharp from "sharp";
+
+          const jobs = [
+            ["public/mockup-transparente.png", "public/mockup-transparente.webp", 960, 84],
+            ["public/instrutor-mecanica-motos.png", "public/instrutor-mecanica-motos.webp", 768, 82],
+            ["public/amostras/01-motor-de-motos.png", "public/amostras/01-motor-de-motos.webp", 800, 86],
+            ["public/amostras/02-sistema-alimentacao.png", "public/amostras/02-sistema-alimentacao.webp", 800, 86],
+            ["public/amostras/03-injecao-eletronica.png", "public/amostras/03-injecao-eletronica.webp", 800, 86],
+            ["public/amostras/04-sistema-eletrico.png", "public/amostras/04-sistema-eletrico.webp", 800, 86],
+            ["public/amostras/05-sistema-freios.png", "public/amostras/05-sistema-freios.webp", 800, 86],
+            ["public/amostras/06-suspensao.png", "public/amostras/06-suspensao.webp", 800, 86],
+            ["public/amostras/07-embreagem.png", "public/amostras/07-embreagem.webp", 800, 86],
+            ["public/amostras/08-transmissao-final.png", "public/amostras/08-transmissao-final.webp", 800, 86],
+            ["public/amostras/09-manutencao-preventiva.png", "public/amostras/09-manutencao-preventiva.webp", 800, 86],
+            ["public/amostras/10-diagnostico-defeitos.png", "public/amostras/10-diagnostico-defeitos.webp", 800, 86],
+          ];
+
+          for (const [input, output, width, quality] of jobs) {
+            await sharp(input)
+              .resize({ width, fit: "inside", withoutEnlargement: true })
+              .webp({ quality, alphaQuality: 90, smartSubsample: true, effort: 5 })
+              .toFile(output);
+            console.log(`Optimized ${input} -> ${output}`);
+          }
+          NODE
+
+      - name: Point the page to optimized images
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          index = Path("src/routes/index.tsx")
+          text = index.read_text()
+          text = text.replace('/mockup-transparente.png', '/mockup-transparente.webp')
+          text = text.replace('/instrutor-mecanica-motos.png', '/instrutor-mecanica-motos.webp')
+          for i in range(1, 11):
+              prefix = f"{i:02d}-"
+              text = text.replace(f"/amostras/{prefix}", f"/amostras/{prefix}")
+          text = text.replace('.png" },', '.webp" },')
+          index.write_text(text)
+
+          root = Path("src/routes/__root.tsx")
+          root_text = root.read_text().replace('/mockup-transparente.png', '/mockup-transparente.webp')
+          root.write_text(root_text)
+          PY
+
+      - name: Show generated sizes
+        run: |
+          du -h public/mockup-transparente.webp public/instrutor-mecanica-motos.webp public/amostras/*.webp
+
+      - name: Commit optimized assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/*.webp public/amostras/*.webp src/routes/index.tsx src/routes/__root.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "perf: generate optimized WebP assets"
+          git push
