@@ -60,16 +60,16 @@ const audiences = [
 ];
 
 const courseSamples = [
-  { title: "Motor de motos", src: "/amostras/01-motor-de-motos.png" },
-  { title: "Sistema de alimentação", src: "/amostras/02-sistema-alimentacao.png" },
-  { title: "Injeção eletrônica", src: "/amostras/03-injecao-eletronica.png" },
-  { title: "Sistema elétrico", src: "/amostras/04-sistema-eletrico.png" },
-  { title: "Sistema de freios", src: "/amostras/05-sistema-freios.png" },
-  { title: "Suspensão de motos", src: "/amostras/06-suspensao.png" },
-  { title: "Embreagem de motos", src: "/amostras/07-embreagem.png" },
-  { title: "Transmissão final", src: "/amostras/08-transmissao-final.png" },
-  { title: "Manutenção preventiva", src: "/amostras/09-manutencao-preventiva.png" },
-  { title: "Diagnóstico de defeitos", src: "/amostras/10-diagnostico-defeitos.png" },
+  { title: "Motor de motos", src: "/amostras/01-motor-de-motos.webp" },
+  { title: "Sistema de alimentação", src: "/amostras/02-sistema-alimentacao.webp" },
+  { title: "Injeção eletrônica", src: "/amostras/03-injecao-eletronica.webp" },
+  { title: "Sistema elétrico", src: "/amostras/04-sistema-eletrico.webp" },
+  { title: "Sistema de freios", src: "/amostras/05-sistema-freios.webp" },
+  { title: "Suspensão de motos", src: "/amostras/06-suspensao.webp" },
+  { title: "Embreagem de motos", src: "/amostras/07-embreagem.webp" },
+  { title: "Transmissão final", src: "/amostras/08-transmissao-final.webp" },
+  { title: "Manutenção preventiva", src: "/amostras/09-manutencao-preventiva.webp" },
+  { title: "Diagnóstico de defeitos", src: "/amostras/10-diagnostico-defeitos.webp" },
 ] as const;
 
 const CAROUSEL_PLACEHOLDER = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
@@ -222,7 +222,7 @@ function Index() {
           <div className="relative mt-6 w-full max-w-3xl">
             <div className="absolute inset-8 rounded-full bg-primary/20 blur-3xl" aria-hidden="true" />
             <div className="absolute inset-x-[5%] bottom-0 h-[14%] rounded-xl border border-primary/20 bg-sky-50 shadow-lg" aria-hidden="true" />
-            <img width="1254" height="1254" src="/mockup-transparente.png" alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 w-full object-contain drop-shadow-2xl" loading="eager" fetchPriority="high" decoding="async" />
+            <img width="1254" height="1254" src="/mockup-transparente.webp" alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 w-full object-contain drop-shadow-2xl" loading="eager" fetchPriority="high" decoding="async" />
           </div>
           <p className="mt-6 max-w-2xl text-base leading-7 text-steel md:text-lg">Curso 100% online com mais de 80 videoaulas práticas sobre motor, elétrica, injeção, freios, suspensão e diagnóstico de motos.</p>
           <div className="mt-8"><Cta /></div>
@@ -286,7 +286,7 @@ function Index() {
         </div></div></div></section>
 
     <section data-meta-section="instrutor" className="py-16 md:py-24"><div className="mx-auto grid max-w-5xl items-center gap-10 px-5 md:grid-cols-[0.7fr_1.3fr] md:px-8"><div className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-border bg-secondary shadow-xl">
-          <img src="/instrutor-mecanica-motos.png" alt="Apresentador da formação em uma oficina de motocicletas" width="1122" height="1402" className="block h-auto w-full" loading="lazy" fetchPriority="low" decoding="async" />
+          <img src="/instrutor-mecanica-motos.webp" alt="Apresentador da formação em uma oficina de motocicletas" width="1122" height="1402" className="block h-auto w-full" loading="lazy" fetchPriority="low" decoding="async" />
         </div><div><p className="text-xs font-extrabold uppercase tracking-widest text-primary">Quem sou eu</p><h2 className="mt-2 text-5xl font-extrabold uppercase">João Emanuel</h2><p className="mt-5 leading-7 text-muted-foreground">Profissional da área de mecânica com experiência prática em manutenção e diagnóstico. Apresenta os conteúdos de maneira simples, direta e passo a passo, especialmente para quem começa do zero.</p><div className="mt-6 flex flex-wrap gap-3">{["Experiência prática","Conteúdo objetivo","Ensino passo a passo"].map(x=><span key={x} className="flex items-center gap-2 rounded-md bg-muted px-3 py-2 text-xs font-bold"><Check className="size-4 text-primary"/>{x}</span>)}</div></div></div></section>
 
     <section data-meta-section="duvidas" className="bg-muted py-16 md:py-24"><div className="mx-auto max-w-3xl px-5 md:px-8"><SectionHeading eyebrow="Dúvidas" title="Perguntas frequentes" /><Accordion type="single" collapsible className="rounded-lg border border-border bg-card px-6">{faqs.map(([q,a],i)=><AccordionItem value={`q-${i}`} key={q}><AccordionTrigger className="text-base font-bold">{q}</AccordionTrigger><AccordionContent className="leading-6 text-muted-foreground">{a}</AccordionContent></AccordionItem>)}</Accordion></div></section>

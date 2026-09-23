@@ -87,7 +87,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
-      { rel: "preload", href: "/mockup-transparente.png", as: "image", fetchPriority: "high" },
+      { rel: "preload", href: "/mockup-transparente.webp", as: "image", fetchPriority: "high" },
       {
         rel: "stylesheet",
         href: appCss,
