@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { BasicPlanOffer } from "@/components/BasicPlanOffer";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import bonusExclusivosAsset from "@/assets/bonus-exclusivos-mecanicos-motos.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
@@ -246,13 +247,13 @@ function Index() {
     <section data-meta-section="bonus" className="py-14 md:py-20"><div className="mx-auto max-w-7xl px-4 md:px-8"><SectionHeading eyebrow="Exclusivo do Plano Profissional" title="10 bônus para complementar sua formação" text="Materiais práticos para estudar, consultar e acompanhar sua evolução." />
       <div className="mx-auto w-full max-w-[360px] overflow-hidden rounded-xl border border-border bg-card shadow-lg">
         <img
-          src="/bonus-mecanica-motos-mobil.jpg"
+          src={bonusExclusivosAsset.url}
           alt="10 bônus exclusivos da Formação Mecânico de Motos"
           className="block h-auto w-full object-contain"
           loading="lazy"
           decoding="async"
-          width="1254"
-          height="1254"
+          width="768"
+          height="768"
         />
       </div>
     </div></section>
