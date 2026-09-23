@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
@@ -72,35 +72,79 @@ const courseSamples = [
   { title: "Diagnóstico de defeitos", src: "/amostras/10-diagnostico-defeitos.png" },
 ] as const;
 
+const CAROUSEL_PLACEHOLDER = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+
 function CourseSamplesCarousel() {
   const [viewportRef, carousel] = useEmblaCarousel({
     align: "center",
     loop: true,
     duration: 35,
   });
+  const regionRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [loadedIndexes, setLoadedIndexes] = useState<Set<number>>(
+    () => new Set([courseSamples.length - 1, 0, 1]),
+  );
+
+  const markNearbySlidesForLoad = (index: number) => {
+    setLoadedIndexes((current) => {
+      const next = new Set(current);
+      const total = courseSamples.length;
+      next.add(index);
+      next.add((index + 1) % total);
+      next.add((index - 1 + total) % total);
+      return next.size === current.size ? current : next;
+    });
+  };
+
+  useEffect(() => {
+    const node = regionRef.current;
+    if (!node || !("IntersectionObserver" in window)) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { rootMargin: "200px 0px", threshold: 0.05 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!carousel) return;
 
-    const syncActiveIndex = () => setActiveIndex(carousel.selectedScrollSnap());
+    const syncActiveIndex = () => {
+      const index = carousel.selectedScrollSnap();
+      setActiveIndex(index);
+      markNearbySlidesForLoad(index);
+    };
+
     syncActiveIndex();
     carousel.on("select", syncActiveIndex);
     carousel.on("reInit", syncActiveIndex);
 
-    const interval = window.setInterval(() => {
-      if (!document.hidden) carousel.scrollNext();
-    }, 2000);
-
     return () => {
-      window.clearInterval(interval);
       carousel.off("select", syncActiveIndex);
       carousel.off("reInit", syncActiveIndex);
     };
   }, [carousel]);
 
+  useEffect(() => {
+    if (!carousel || !isVisible) return;
+
+    const interval = window.setInterval(() => {
+      if (!document.hidden) carousel.scrollNext();
+    }, 2000);
+
+    return () => window.clearInterval(interval);
+  }, [carousel, isVisible]);
+
   return (
     <div
+      ref={regionRef}
       className="relative left-1/2 w-screen -translate-x-1/2 py-3"
       role="region"
       aria-roledescription="carrossel"
@@ -119,16 +163,17 @@ function CourseSamplesCarousel() {
                   ? "border-primary/40 opacity-100"
                   : "border-border opacity-60"
               }`}
-              // viewport = one full slide + 60% of each neighbor + two gaps.
-              // Cap the viewport, not individual slides, so sizing stays consistent.
               style={{ flexBasis: "calc((100% - 24px) / 2.2)" }}
             >
               <img
-                src={sample.src}
+                src={loadedIndexes.has(index) ? sample.src : CAROUSEL_PLACEHOLDER}
                 alt={sample.title}
-                className="block h-auto w-full"
-                loading="eager"
+                className="block aspect-square h-auto w-full object-cover"
+                loading="lazy"
+                fetchPriority="low"
                 decoding="async"
+                width="1024"
+                height="1024"
                 draggable={false}
               />
             </article>
@@ -177,7 +222,7 @@ function Index() {
           <div className="relative mt-6 w-full max-w-3xl">
             <div className="absolute inset-8 rounded-full bg-primary/20 blur-3xl" aria-hidden="true" />
             <div className="absolute inset-x-[5%] bottom-0 h-[14%] rounded-xl border border-primary/20 bg-sky-50 shadow-lg" aria-hidden="true" />
-            <img width="1254" height="1254" src="/mockup-transparente.png" alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 w-full object-contain drop-shadow-2xl" />
+            <img width="1254" height="1254" src="/mockup-transparente.png" alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 w-full object-contain drop-shadow-2xl" loading="eager" fetchPriority="high" decoding="async" />
           </div>
           <p className="mt-6 max-w-2xl text-base leading-7 text-steel md:text-lg">Curso 100% online com mais de 80 videoaulas práticas sobre motor, elétrica, injeção, freios, suspensão e diagnóstico de motos.</p>
           <div className="mt-8"><Cta /></div>
@@ -201,7 +246,7 @@ function Index() {
     <section data-meta-section="bonus" className="py-14 md:py-20"><div className="mx-auto max-w-7xl px-4 md:px-8"><SectionHeading eyebrow="Exclusivo do Plano Profissional" title="10 bônus para complementar sua formação" text="Materiais práticos para estudar, consultar e acompanhar sua evolução." />
       <div className="mx-auto w-full max-w-[360px] overflow-hidden rounded-xl border border-border bg-card shadow-lg">
         <img
-          src="/bonus-mecanica-motos-original.png"
+          src="/bonus-mecanica-motos-mobil.jpg"
           alt="10 bônus exclusivos da Formação Mecânico de Motos"
           className="block h-auto w-full object-contain"
           loading="lazy"
@@ -241,7 +286,7 @@ function Index() {
         </div></div></div></section>
 
     <section data-meta-section="instrutor" className="py-16 md:py-24"><div className="mx-auto grid max-w-5xl items-center gap-10 px-5 md:grid-cols-[0.7fr_1.3fr] md:px-8"><div className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-border bg-secondary shadow-xl">
-          <img src="/instrutor-mecanica-motos.png" alt="Apresentador da formação em uma oficina de motocicletas" width="1122" height="1402" className="block h-auto w-full" loading="lazy" decoding="async" />
+          <img src="/instrutor-mecanica-motos.png" alt="Apresentador da formação em uma oficina de motocicletas" width="1122" height="1402" className="block h-auto w-full" loading="lazy" fetchPriority="low" decoding="async" />
         </div><div><p className="text-xs font-extrabold uppercase tracking-widest text-primary">Quem sou eu</p><h2 className="mt-2 text-5xl font-extrabold uppercase">João Emanuel</h2><p className="mt-5 leading-7 text-muted-foreground">Profissional da área de mecânica com experiência prática em manutenção e diagnóstico. Apresenta os conteúdos de maneira simples, direta e passo a passo, especialmente para quem começa do zero.</p><div className="mt-6 flex flex-wrap gap-3">{["Experiência prática","Conteúdo objetivo","Ensino passo a passo"].map(x=><span key={x} className="flex items-center gap-2 rounded-md bg-muted px-3 py-2 text-xs font-bold"><Check className="size-4 text-primary"/>{x}</span>)}</div></div></div></section>
 
     <section data-meta-section="duvidas" className="bg-muted py-16 md:py-24"><div className="mx-auto max-w-3xl px-5 md:px-8"><SectionHeading eyebrow="Dúvidas" title="Perguntas frequentes" /><Accordion type="single" collapsible className="rounded-lg border border-border bg-card px-6">{faqs.map(([q,a],i)=><AccordionItem value={`q-${i}`} key={q}><AccordionTrigger className="text-base font-bold">{q}</AccordionTrigger><AccordionContent className="leading-6 text-muted-foreground">{a}</AccordionContent></AccordionItem>)}</Accordion></div></section>
