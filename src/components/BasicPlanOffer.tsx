@@ -1,5 +1,6 @@
 import { Check, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { buildVegaCheckoutUrl } from "@/lib/tracking";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 type BasicPlanOfferProps = {
@@ -37,9 +38,22 @@ export function BasicPlanOffer({ basicCheckoutUrl, completeCheckoutUrl }: BasicP
           </ul>
         </div>
         <Button variant="sales" size="xl" className="h-auto min-h-14 w-full whitespace-normal py-3 text-center" asChild>
-          <a href={completeCheckoutUrl}>Quero o kit completo por R$ 18,90</a>
+          <a
+            href={completeCheckoutUrl}
+            onClick={(event) => {
+              event.currentTarget.href = buildVegaCheckoutUrl(completeCheckoutUrl);
+            }}
+          >
+            Quero o kit completo por R$ 18,90
+          </a>
         </Button>
-        <a href={basicCheckoutUrl} className="rounded-md py-2 text-center text-sm font-semibold text-muted-foreground underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary">
+        <a
+          href={basicCheckoutUrl}
+          onClick={(event) => {
+            event.currentTarget.href = buildVegaCheckoutUrl(basicCheckoutUrl);
+          }}
+          className="rounded-md py-2 text-center text-sm font-semibold text-muted-foreground underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+        >
           Continuar com o Básico por R$ 10,00
         </a>
         <p className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
