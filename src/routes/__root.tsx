@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { captureAndPersistTracking } from "../lib/tracking";
 
 function NotFoundComponent() {
   return (
@@ -122,6 +123,15 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   useEffect(() => {
+    // Store fbclid, _fbp, _fbc and UTMs without blocking rendering.
+    captureAndPersistTracking();
+
+    // Meta may create/update _fbp/_fbc shortly after the Pixel initializes.
+    // Upsert the same tracking_id again with the freshest cookie values.
+    const trackingRefreshTimer = window.setTimeout(() => {
+      captureAndPersistTracking();
+    }, 2500);
+
     let cancelled = false;
 
     const loadPixel = () => {
@@ -140,6 +150,7 @@ function RootComponent() {
     }
 
     return () => {
+      window.clearTimeout(trackingRefreshTimer);
       cancelled = true;
       window.removeEventListener("load", loadPixel);
     };
