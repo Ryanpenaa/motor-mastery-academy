@@ -107,7 +107,7 @@ function CourseSamplesCarousel() {
     }
 
     const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
+      ([entry]) => setIsVisible(entry?.isIntersecting ?? false),
       { rootMargin: "200px 0px", threshold: 0.05 },
     );
     observer.observe(node);
@@ -183,7 +183,7 @@ function CourseSamplesCarousel() {
       </div>
 
       <p className="mt-4 text-center text-sm font-extrabold uppercase text-foreground">
-        {courseSamples[activeIndex].title}
+        {courseSamples[activeIndex]?.title ?? courseSamples[0].title}
       </p>
 
       <div className="mt-3 flex justify-center gap-1.5" aria-hidden="true">
