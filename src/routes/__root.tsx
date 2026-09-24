@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import hero480Asset from "../assets/performance/hero-480.webp.asset.json";
+import hero800Asset from "../assets/performance/hero-800.webp.asset.json";
 import manropeAsset from "../assets/performance/manrope-variable.woff2.asset.json";
 import barlowAsset from "../assets/performance/barlow-condensed-variable.woff2.asset.json";
 import { captureAndPersistTracking } from "../lib/tracking";
@@ -92,6 +93,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "preload", href: hero480Asset.url, as: "image", type: "image/webp", media: "(max-width: 520px)", fetchPriority: "high" },
+      { rel: "preload", href: hero800Asset.url, as: "image", type: "image/webp", media: "(min-width: 521px)", fetchPriority: "high" },
       {
         rel: "stylesheet",
         href: appCss,
