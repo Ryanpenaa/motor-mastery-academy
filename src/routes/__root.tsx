@@ -149,7 +149,7 @@ function RootComponent() {
       if ("requestIdleCallback" in window) {
         window.requestIdleCallback(loadPixel, { timeout: 3000 });
       } else {
-        window.setTimeout(loadPixel, 2000);
+        globalThis.setTimeout(loadPixel, 2000);
       }
     };
 
