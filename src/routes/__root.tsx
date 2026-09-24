@@ -11,6 +11,10 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import hero480Asset from "../assets/performance/hero-480.webp.asset.json";
+import hero800Asset from "../assets/performance/hero-800.webp.asset.json";
+import manropeAsset from "../assets/performance/manrope-variable.woff2.asset.json";
+import barlowAsset from "../assets/performance/barlow-condensed-variable.woff2.asset.json";
 import { captureAndPersistTracking } from "../lib/tracking";
 
 function NotFoundComponent() {
@@ -88,14 +92,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
-      { rel: "preload", href: "/mockup-transparente.webp", as: "image", fetchPriority: "high" },
+      { rel: "preload", href: hero480Asset.url, as: "image", type: "image/webp", media: "(max-width: 520px)", fetchPriority: "high" },
+      { rel: "preload", href: hero800Asset.url, as: "image", type: "image/webp", media: "(min-width: 521px)", fetchPriority: "high" },
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Manrope:wght@400;600;700;800&display=swap" },
+      { rel: "preload", href: manropeAsset.url, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: barlowAsset.url, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       { rel: "icon", href: "/favicon-mecanica.svg", type: "image/svg+xml", sizes: "any" },
     ],
   }),
@@ -143,16 +147,21 @@ function RootComponent() {
       document.head.appendChild(script);
     };
 
-    if (document.readyState === "complete") {
-      window.setTimeout(loadPixel, 0);
-    } else {
-      window.addEventListener("load", loadPixel, { once: true });
-    }
+    const schedulePixel = () => {
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(loadPixel, { timeout: 3000 });
+      } else {
+        globalThis.setTimeout(loadPixel, 2000);
+      }
+    };
+
+    if (document.readyState === "complete") schedulePixel();
+    else window.addEventListener("load", schedulePixel, { once: true });
 
     return () => {
       window.clearTimeout(trackingRefreshTimer);
       cancelled = true;
-      window.removeEventListener("load", loadPixel);
+      window.removeEventListener("load", schedulePixel);
     };
   }, []);
 

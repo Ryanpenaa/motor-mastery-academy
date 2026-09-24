@@ -9,6 +9,18 @@ import { Button } from "@/components/ui/button";
 import { BasicPlanOffer } from "@/components/BasicPlanOffer";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import bonusExclusivosAsset from "@/assets/bonus-exclusivos-mecanicos-motos.png.asset.json";
+import hero480Asset from "@/assets/performance/hero-480.webp.asset.json";
+import hero800Asset from "@/assets/performance/hero-800.webp.asset.json";
+import sample01Asset from "@/assets/performance/sample-01-480.webp.asset.json";
+import sample02Asset from "@/assets/performance/sample-02-480.webp.asset.json";
+import sample03Asset from "@/assets/performance/sample-03-480.webp.asset.json";
+import sample04Asset from "@/assets/performance/sample-04-480.webp.asset.json";
+import sample05Asset from "@/assets/performance/sample-05-480.webp.asset.json";
+import sample06Asset from "@/assets/performance/sample-06-480.webp.asset.json";
+import sample07Asset from "@/assets/performance/sample-07-480.webp.asset.json";
+import sample08Asset from "@/assets/performance/sample-08-480.webp.asset.json";
+import sample09Asset from "@/assets/performance/sample-09-480.webp.asset.json";
+import sample10Asset from "@/assets/performance/sample-10-480.webp.asset.json";
 import { buildVegaCheckoutUrl } from "@/lib/tracking";
 
 export const Route = createFileRoute("/")({
@@ -30,19 +42,6 @@ const lessons = [
   "Aula 74 — Revisão preventiva completa",
 ];
 
-const bonuses = [
-  ["01", "Apostila Completa de Mecânica de Motos", "Revise os principais conceitos e consulte sempre que precisar."],
-  ["02", "Tabela de Torques e Especificações", "Informações úteis para estudos e procedimentos."],
-  ["03", "Checklist de Revisão Preventiva", "Organize os pontos observados durante uma revisão."],
-  ["04", "Guia de Diagnóstico de Defeitos", "Identifique possíveis causas de falhas mecânicas e elétricas."],
-  ["05", "Manual de Ferramentas", "Conheça as ferramentas de oficina e a função de cada uma."],
-  ["06", "Guia de Sistema Elétrico", "Componentes elétricos e fundamentos de diagnóstico."],
-  ["07", "Guia de Injeção Eletrônica", "Sensores, atuadores e funcionamento do sistema."],
-  ["08", "Manual de Freios e Suspensão", "Funcionamento, inspeção e manutenção dos sistemas."],
-  ["09", "Guia de Embreagem e Transmissão", "Embreagem, câmbio, corrente, coroa e pinhão."],
-  ["10", "Guia para Conseguir os Primeiros Clientes", "Orientações para transformar conhecimento em serviços."],
-];
-
 const faqs = [
   ["Preciso ter experiência para começar?", "Não. A formação foi desenvolvida para quem deseja começar do zero."],
   ["O curso é voltado somente para motos?", "Sim. O conteúdo é focado nos principais sistemas, componentes e procedimentos da mecânica de motocicletas."],
@@ -62,16 +61,16 @@ const audiences = [
 ];
 
 const courseSamples = [
-  { title: "Motor de motos", src: "/amostras/01-motor-de-motos.webp" },
-  { title: "Sistema de alimentação", src: "/amostras/02-sistema-alimentacao.webp" },
-  { title: "Injeção eletrônica", src: "/amostras/03-injecao-eletronica.webp" },
-  { title: "Sistema elétrico", src: "/amostras/04-sistema-eletrico.webp" },
-  { title: "Sistema de freios", src: "/amostras/05-sistema-freios.webp" },
-  { title: "Suspensão de motos", src: "/amostras/06-suspensao.webp" },
-  { title: "Embreagem de motos", src: "/amostras/07-embreagem.webp" },
-  { title: "Transmissão final", src: "/amostras/08-transmissao-final.webp" },
-  { title: "Manutenção preventiva", src: "/amostras/09-manutencao-preventiva.webp" },
-  { title: "Diagnóstico de defeitos", src: "/amostras/10-diagnostico-defeitos.webp" },
+  { title: "Motor de motos", src: sample01Asset.url },
+  { title: "Sistema de alimentação", src: sample02Asset.url },
+  { title: "Injeção eletrônica", src: sample03Asset.url },
+  { title: "Sistema elétrico", src: sample04Asset.url },
+  { title: "Sistema de freios", src: sample05Asset.url },
+  { title: "Suspensão de motos", src: sample06Asset.url },
+  { title: "Embreagem de motos", src: sample07Asset.url },
+  { title: "Transmissão final", src: sample08Asset.url },
+  { title: "Manutenção preventiva", src: sample09Asset.url },
+  { title: "Diagnóstico de defeitos", src: sample10Asset.url },
 ] as const;
 
 const CAROUSEL_PLACEHOLDER = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
@@ -86,7 +85,7 @@ function CourseSamplesCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [loadedIndexes, setLoadedIndexes] = useState<Set<number>>(
-    () => new Set([courseSamples.length - 1, 0, 1]),
+    () => new Set<number>(),
   );
 
   const markNearbySlidesForLoad = (index: number) => {
@@ -121,7 +120,7 @@ function CourseSamplesCarousel() {
     const syncActiveIndex = () => {
       const index = carousel.selectedScrollSnap();
       setActiveIndex(index);
-      markNearbySlidesForLoad(index);
+      if (isVisible) markNearbySlidesForLoad(index);
     };
 
     syncActiveIndex();
@@ -132,10 +131,12 @@ function CourseSamplesCarousel() {
       carousel.off("select", syncActiveIndex);
       carousel.off("reInit", syncActiveIndex);
     };
-  }, [carousel]);
+  }, [carousel, isVisible]);
 
   useEffect(() => {
     if (!carousel || !isVisible) return;
+
+    markNearbySlidesForLoad(carousel.selectedScrollSnap());
 
     const interval = window.setInterval(() => {
       if (!document.hidden) carousel.scrollNext();
@@ -174,8 +175,8 @@ function CourseSamplesCarousel() {
                 loading="lazy"
                 fetchPriority="low"
                 decoding="async"
-                width="1024"
-                height="1024"
+                width="480"
+                height="480"
                 draggable={false}
               />
             </article>
@@ -221,10 +222,10 @@ function Index() {
         <div className="relative z-10 flex w-full flex-col items-center">
           <p className="mb-5 inline-flex items-center gap-2 border-l-4 border-primary pl-3 text-xs font-extrabold uppercase tracking-widest text-primary">Formação profissionalizante online</p>
           <h1 className="max-w-4xl text-5xl font-extrabold uppercase leading-[0.94] md:text-7xl">Torne-se um <span className="text-primary">Mecânico de Motos</span>: do zero ao avançado</h1>
-          <div className="relative mt-6 w-full max-w-3xl">
+          <div className="relative mt-6 aspect-square w-full max-w-3xl">
             <div className="absolute inset-8 rounded-full bg-primary/20 blur-3xl" aria-hidden="true" />
             <div className="absolute inset-x-[5%] bottom-0 h-[14%] rounded-xl border border-primary/20 bg-sky-50 shadow-lg" aria-hidden="true" />
-            <img width="1254" height="1254" src="/mockup-transparente.webp" alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 w-full object-contain drop-shadow-2xl" loading="eager" fetchPriority="high" decoding="async" />
+            <img width="800" height="800" src={hero800Asset.url} srcSet={`${hero480Asset.url} 480w, ${hero800Asset.url} 800w`} sizes="(max-width: 520px) calc(100vw - 40px), (max-width: 768px) calc(100vw - 64px), 768px" alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 size-full object-contain drop-shadow-2xl" loading="eager" fetchPriority="high" decoding="async" />
           </div>
           <p className="mt-6 max-w-2xl text-base leading-7 text-steel md:text-lg">Curso 100% online com mais de 80 videoaulas práticas sobre motor, elétrica, injeção, freios, suspensão e diagnóstico de motos.</p>
           <div className="mt-8"><Cta /></div>
