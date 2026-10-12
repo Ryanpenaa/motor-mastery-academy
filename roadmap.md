@@ -5,3 +5,5 @@
 - [x] Integrar o mockup enviado à apresentação
 - [x] Verificar leitura e navegação em desktop e celular
 - [x] Otimizar desempenho mobile conforme relatório do PageSpeed
+- [x] Enxugar avisos de compra e remover a legenda de exemplo ilustrativo
+
