@@ -229,7 +229,7 @@ function Index() {
             <div className="absolute inset-x-[5%] bottom-0 h-[14%] rounded-xl border border-primary/20 bg-sky-50 shadow-lg" aria-hidden="true" />
             <img width="800" height="800" src={hero800Asset.url} srcSet={`${hero480Asset.url} 480w, ${hero800Asset.url} 800w`} sizes="(max-width: 520px) calc(100vw - 40px), (max-width: 768px) calc(100vw - 64px), 768px" alt="Formação Mecânico de Motos com aulas, certificado e materiais de apoio" className="relative z-10 size-full object-contain drop-shadow-2xl" loading="eager" fetchPriority="high" decoding="async" />
           </div>
-          <p className="mt-6 max-w-2xl text-base leading-7 text-steel md:text-lg">Curso 100% online com mais de 80 videoaulas práticas sobre motor, elétrica, injeção, freios, suspensão e diagnóstico de motos.</p>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-steel md:text-lg">CURSO 100% ONLINE EM VIDEOAULAS</p>
           <div className="mt-8"><Cta /></div>
           <TrustLine />
         </div>
