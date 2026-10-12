@@ -3,6 +3,8 @@ import { Clock3, CheckCircle2, X } from "lucide-react";
 
 const DURATION = 15 * 60 * 1000;
 const STORAGE_KEY = "moto_offer_countdown_start_v1";
+const DEMO_NAMES = ["Ana", "Carlos", "Mariana", "Pedro", "Juliana", "Rafael", "Bruna", "Lucas"];
+const DEMO_PLANS = ["Básico", "Profissional"];
 
 function getRemaining() {
   if (typeof window === "undefined") return DURATION;
@@ -55,18 +57,19 @@ export function OfferUrgencyAndPurchases() {
   }, []);
 
   useEffect(() => {
-    const onVerified = (event: Event) => {
-      const data = (event as CustomEvent<VerifiedPurchase>).detail;
-      if (!data || typeof data.name !== "string" || typeof data.plan !== "string" || typeof data.purchasedAt !== "string") return;
-      const timestamp = Date.parse(data.purchasedAt);
-      if (!Number.isFinite(timestamp) || timestamp > Date.now() || Date.now() - timestamp > 24 * 60 * 60 * 1000) return;
-      const name = data.name.trim().split(/\s+/)[0]?.slice(0, 24);
-      if (!name || !["Básico", "Profissional"].includes(data.plan)) return;
-      setPurchase({ name, plan: data.plan, purchasedAt: data.purchasedAt });
+    let timeout: ReturnType<typeof setTimeout>;
+    let lastName = "";
+    const showIllustration = () => {
+      const candidates = DEMO_NAMES.filter((name) => name !== lastName);
+      const name = candidates[Math.floor(Math.random() * candidates.length)];
+      lastName = name;
+      const plan = DEMO_PLANS[Math.floor(Math.random() * DEMO_PLANS.length)];
+      setPurchase({ name, plan, purchasedAt: new Date(Date.now() - (2 + Math.floor(Math.random() * 12)) * 60000).toISOString() });
       setClosed(false);
+      timeout = window.setTimeout(showIllustration, 17000 + Math.floor(Math.random() * 15000));
     };
-    window.addEventListener("moto:verified-purchase", onVerified);
-    return () => window.removeEventListener("moto:verified-purchase", onVerified);
+    timeout = window.setTimeout(showIllustration, 7000);
+    return () => window.clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -95,7 +98,8 @@ export function OfferUrgencyAndPurchases() {
           <div className="pointer-events-auto flex items-start gap-2.5 rounded-xl border border-emerald-200 bg-white p-3 text-slate-900 shadow-xl">
             <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" aria-hidden="true" />
             <div className="min-w-0 flex-1 text-xs leading-5">
-              <p className="font-extrabold">{purchase.name} adquiriu o Plano {purchase.plan}</p>
+              <p className="mb-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-500">Exemplo ilustrativo • não é uma compra real</p>
+              <p className="font-extrabold">{purchase.name} — Plano {purchase.plan}</p>
               <p className="text-slate-500">{timeAgo(purchase.purchasedAt, now)}</p>
             </div>
             <button type="button" aria-label="Fechar aviso de compra" onClick={() => setClosed(true)} className="rounded p-0.5 text-slate-500 hover:text-slate-900"><X className="size-4" /></button>
