@@ -48,7 +48,7 @@ export function OfferUrgencyAndPurchases() {
   useEffect(() => {
     const update = () => {
       setRemaining(getRemaining());
-      setToday(new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "long", year: "numeric" }).format(new Date()));
+      setToday(new Intl.DateTimeFormat("pt-BR", { day: "numeric", month: "short" }).format(new Date()).replace(".", ""));
       setNow(Date.now());
     };
     update();
@@ -85,10 +85,10 @@ export function OfferUrgencyAndPurchases() {
     <>
       <div className="relative z-20 border-b border-amber-400/30 bg-amber-400 px-3 py-2.5 text-center text-slate-950">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs font-extrabold sm:text-sm">
-          <span className="uppercase tracking-wide">Oferta de hoje {today ? `• ${today}` : ""}</span>
-          <span className="hidden sm:inline" aria-hidden="true">|</span>
+          <span className="uppercase tracking-wide">Só hoje {today}</span>
+          
           <span className="flex items-center gap-1.5"><Clock3 className="size-4" aria-hidden="true" />
-            {remaining > 0 ? "Seu tempo para aproveitar:" : "Tempo da oferta encerrado"}
+            {remaining > 0 ? "" : "Encerrado"}
           </span>
           {remaining > 0 && <span className="rounded-md bg-slate-950 px-2.5 py-1 font-mono text-base font-black tabular-nums text-white" role="timer" aria-label={`${minutes} minutos e ${seconds} segundos restantes`}>{minutes}:{seconds}</span>}
         </div>
