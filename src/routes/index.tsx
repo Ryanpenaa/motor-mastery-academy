@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BasicPlanOffer } from "@/components/BasicPlanOffer";
+import { OfferUrgencyAndPurchases } from "@/components/OfferUrgencyAndPurchases";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import bonusExclusivosAsset from "@/assets/bonus-exclusivos-mecanicos-motos.png.asset.json";
 import hero480Asset from "@/assets/performance/hero-480.webp.asset.json";
@@ -216,6 +217,7 @@ function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: stri
 
 function Index() {
   return <main className="min-h-screen bg-background">
+    <OfferUrgencyAndPurchases />
     <section data-meta-section="inicio" id="inicio" className="relative overflow-hidden bg-surface-dark text-surface-dark-foreground">
       <div className="absolute inset-x-0 bottom-0 h-px bg-primary/30" />
       <div className="mx-auto flex max-w-5xl flex-col items-center px-5 pb-14 pt-8 text-center md:min-h-[650px] md:px-8 md:py-16">
