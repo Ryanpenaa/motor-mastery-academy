@@ -97,11 +97,11 @@ export function OfferUrgencyAndPurchases() {
         </div>
       </div>
       {purchase && !closed && (
-        <aside aria-live="polite" aria-label="Exemplo ilustrativo de compra" className="pointer-events-none fixed right-3 top-16 z-50 w-[min(238px,calc(100vw-24px))] sm:right-5">
+        <aside aria-live="polite" aria-label="Aviso de compra" className="pointer-events-none fixed right-3 top-16 z-50 w-[min(238px,calc(100vw-24px))] sm:right-5">
           <div className="pointer-events-auto flex items-start gap-1 rounded-md border border-border bg-card px-2.5 py-2 text-card-foreground shadow-sm">
             <div className="min-w-0 flex-1 text-xs leading-4">
               <p className="font-bold">{purchase.name} · Plano {purchase.plan}</p>
-              <p className="mt-0.5 text-[10px] text-muted-foreground">{timeAgo(purchase.purchasedAt, now)} · Exemplo ilustrativo</p>
+              <p className="mt-0.5 text-[10px] text-muted-foreground">{timeAgo(purchase.purchasedAt, now)}</p>
             </div>
             <Button type="button" variant="ghost" size="icon" aria-label="Fechar aviso de compra" title="Fechar aviso" onClick={() => setClosed(true)} className="size-5 shrink-0 text-muted-foreground"><X className="size-3" /></Button>
           </div>
