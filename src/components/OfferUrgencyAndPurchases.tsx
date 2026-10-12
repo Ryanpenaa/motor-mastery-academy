@@ -5,6 +5,10 @@ const DURATION = 15 * 60 * 1000;
 const STORAGE_KEY = "moto_offer_countdown_start_v1";
 const DEMO_NAMES = ["Ana", "Carlos", "Mariana", "Pedro", "Juliana", "Rafael", "Bruna", "Lucas"];
 const DEMO_PLANS = ["Básico", "Profissional"];
+const MONTHS = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+function formatOfferDate(date: Date) {
+  return `${date.getDate()} ${MONTHS[date.getMonth()]}`;
+}
 
 function getRemaining() {
   if (typeof window === "undefined") return DURATION;
@@ -40,7 +44,7 @@ function timeAgo(iso: string, now: number) {
 
 export function OfferUrgencyAndPurchases() {
   const [remaining, setRemaining] = useState(DURATION);
-  const [today, setToday] = useState("");
+  const [today, setToday] = useState(() => formatOfferDate(new Date()));
   const [purchase, setPurchase] = useState<VerifiedPurchase | null>(null);
   const [closed, setClosed] = useState(false);
   const [now, setNow] = useState(0);
@@ -48,7 +52,7 @@ export function OfferUrgencyAndPurchases() {
   useEffect(() => {
     const update = () => {
       setRemaining(getRemaining());
-      setToday(new Intl.DateTimeFormat("pt-BR", { day: "numeric", month: "short" }).format(new Date()).replace(".", ""));
+      setToday(formatOfferDate(new Date()));
       setNow(Date.now());
     };
     update();
@@ -85,11 +89,9 @@ export function OfferUrgencyAndPurchases() {
     <>
       <div className="relative z-20 border-b border-amber-400/30 bg-amber-400 px-3 py-2.5 text-center text-slate-950">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs font-extrabold sm:text-sm">
-          <span className="uppercase tracking-wide">Só hoje {today}</span>
+          <span className="uppercase tracking-wide" style={{ color: "#dc2626" }}>SÓ HOJE {today}</span>
           
-          <span className="flex items-center gap-1.5"><Clock3 className="size-4" aria-hidden="true" />
-            {remaining > 0 ? "" : "Encerrado"}
-          </span>
+          <Clock3 className="size-4 text-red-600" aria-hidden="true" />
           {remaining > 0 && <span className="rounded-md bg-slate-950 px-2.5 py-1 font-mono text-base font-black tabular-nums text-white" role="timer" aria-label={`${minutes} minutos e ${seconds} segundos restantes`}>{minutes}:{seconds}</span>}
         </div>
       </div>
