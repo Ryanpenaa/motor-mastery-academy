@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Clock3, CheckCircle2, X } from "lucide-react";
+import { Clock3, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const DURATION = 15 * 60 * 1000;
 const STORAGE_KEY = "moto_offer_countdown_start_v1";
@@ -61,13 +62,13 @@ export function OfferUrgencyAndPurchases() {
   }, []);
 
   useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
+    let timeout: number;
     let lastName = "";
     const showIllustration = () => {
       const candidates = DEMO_NAMES.filter((name) => name !== lastName);
-      const name = candidates[Math.floor(Math.random() * candidates.length)];
+      const name = candidates[Math.floor(Math.random() * candidates.length)] ?? "Ana";
       lastName = name;
-      const plan = DEMO_PLANS[Math.floor(Math.random() * DEMO_PLANS.length)];
+      const plan = DEMO_PLANS[Math.floor(Math.random() * DEMO_PLANS.length)] ?? "Básico";
       setPurchase({ name, plan, purchasedAt: new Date(Date.now() - (2 + Math.floor(Math.random() * 12)) * 60000).toISOString() });
       setClosed(false);
       timeout = window.setTimeout(showIllustration, 17000 + Math.floor(Math.random() * 15000));
@@ -96,15 +97,13 @@ export function OfferUrgencyAndPurchases() {
         </div>
       </div>
       {purchase && !closed && (
-        <aside aria-live="polite" className="pointer-events-none fixed right-3 top-16 z-50 w-[min(310px,calc(100vw-24px))] sm:right-5">
-          <div className="pointer-events-auto flex items-start gap-2.5 rounded-xl border border-emerald-200 bg-white p-3 text-slate-900 shadow-xl">
-            <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" aria-hidden="true" />
-            <div className="min-w-0 flex-1 text-xs leading-5">
-              <p className="mb-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-500">Exemplo ilustrativo • não é uma compra real</p>
-              <p className="font-extrabold">{purchase.name} — Plano {purchase.plan}</p>
-              <p className="text-slate-500">{timeAgo(purchase.purchasedAt, now)}</p>
+        <aside aria-live="polite" aria-label="Exemplo ilustrativo de compra" className="pointer-events-none fixed right-3 top-16 z-50 w-[min(238px,calc(100vw-24px))] sm:right-5">
+          <div className="pointer-events-auto flex items-start gap-1 rounded-md border border-border bg-card px-2.5 py-2 text-card-foreground shadow-sm">
+            <div className="min-w-0 flex-1 text-xs leading-4">
+              <p className="font-bold">{purchase.name} · Plano {purchase.plan}</p>
+              <p className="mt-0.5 text-[10px] text-muted-foreground">{timeAgo(purchase.purchasedAt, now)} · Exemplo ilustrativo</p>
             </div>
-            <button type="button" aria-label="Fechar aviso de compra" onClick={() => setClosed(true)} className="rounded p-0.5 text-slate-500 hover:text-slate-900"><X className="size-4" /></button>
+            <Button type="button" variant="ghost" size="icon" aria-label="Fechar aviso de compra" title="Fechar aviso" onClick={() => setClosed(true)} className="size-5 shrink-0 text-muted-foreground"><X className="size-3" /></Button>
           </div>
         </aside>
       )}
