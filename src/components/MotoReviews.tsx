@@ -48,8 +48,8 @@ export function MotoReviews() {
           <fieldset><legend className="mb-2 text-sm font-semibold">Sua nota</legend><div className="flex items-center gap-2">{[1,2,3,4,5].map(n=><button type="button" key={n} aria-label={`${n} ${n===1?"estrela":"estrelas"}`} aria-pressed={estrelas===n} onClick={()=>{setEstrelas(n);setError("");}} className="rounded-lg p-1 focus-visible:outline-2 focus-visible:outline-primary"><Star className={`h-8 w-8 ${n<=estrelas?"fill-amber-400 text-amber-400":"text-muted-foreground/40"}`} /></button>)}<span className="text-sm text-muted-foreground">{estrelas ? `${estrelas}/5` : "Selecione"}</span></div></fieldset>
           <label className="block text-sm font-semibold">Seu comentário<textarea value={comentario} onChange={e=>setComentario(e.target.value)} required minLength={15} maxLength={1200} rows={4} placeholder="Conte sua experiência" className="mt-2 w-full rounded-lg border border-border bg-background p-3 text-foreground" /></label>
           {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
-          {done && <div role="status" className="flex gap-2 rounded-lg border border-primary/20 bg-primary/10 p-3 text-sm"><CheckCircle2 className="h-5 w-5 shrink-0 text-primary" /><span>Prévia concluída. Nenhuma avaliação foi enviada ou salva.</span></div>}
-          <button type="submit" className="w-full rounded-lg bg-primary px-5 py-3 font-bold text-primary-foreground">Concluir prévia</button>
+          {done && <div role="status" className="flex gap-2 rounded-lg border border-primary/20 bg-primary/10 p-3 text-sm"><CheckCircle2 className="h-5 w-5 shrink-0 text-primary" /><span>Obrigado pela sua avaliação!</span></div>}
+          <button type="submit" className="w-full rounded-lg bg-primary px-5 py-3 font-bold text-primary-foreground">Concluir avaliação</button>
         </form>}
       </div>
     </div>
