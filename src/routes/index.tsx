@@ -55,6 +55,19 @@ const faqs = [
   ["Como funciona a garantia de 7 dias?", "Você pode acessar o curso e avaliar o conteúdo durante o período de garantia estabelecido na compra."],
 ];
 
+const professionalBonuses = [
+  "Apostila Completa de Mecânica de Motos",
+  "Tabela de Torques e Especificações",
+  "Guia de Diagnóstico de Defeitos",
+  "Guia de Sincronismo de Motos",
+  "Manual de Ferramentas Essenciais",
+  "Checklist de Montagem de Motos",
+  "Guia do Sistema Elétrico",
+  "Guia de Injeção Eletrônica",
+  "Manual de Revisão Preventiva",
+  "Guia de Freios e Suspensão",
+];
+
 const audiences = [
   { Icon: GraduationCap, title: "Quem começa do zero", text: "Conteúdo progressivo e linguagem simples." },
   { Icon: Wrench, title: "Quem já faz manutenção", text: "Organize conhecimentos e amplie sua base técnica." },
@@ -265,7 +278,23 @@ function Index() {
     <section data-meta-section="planos" id="planos" className="scroll-mt-4 bg-muted py-16 md:py-24"><div className="mx-auto max-w-5xl px-5 md:px-8"><SectionHeading eyebrow="Planos" title="Escolha como quer começar" text="Dois caminhos para iniciar hoje mesmo." />
       <div className="grid items-stretch gap-6 md:grid-cols-2">
         <article className="flex flex-col rounded-lg border border-border bg-card p-7"><p className="text-sm font-bold text-muted-foreground">Para quem quer começar</p><h3 className="mt-1 text-3xl font-extrabold uppercase">Plano Básico</h3><p className="my-7 font-display text-5xl font-extrabold">R$ 10,00</p><ul className="mb-8 space-y-3">{["80+ aulas em vídeo","Conteúdo 100% online","Acesso vitalício"].map(x=><li className="flex gap-2 text-sm" key={x}><Check className="size-5 text-primary"/>{x}</li>)}</ul><BasicPlanOffer basicCheckoutUrl="https://checkout.kitpro.store/VCCL1O8SD9G1" completeCheckoutUrl="https://checkout.kitpro.store/VCCL1O8SD9G2" /></article>
-        <article className="relative flex flex-col rounded-lg border-2 border-primary bg-card p-7 shadow-xl"><span className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1.5 text-xs font-extrabold uppercase text-primary-foreground">Mais vendido</span><p className="text-sm font-bold text-muted-foreground">Formação completa + materiais</p><h3 className="mt-1 text-3xl font-extrabold uppercase">Plano Profissional</h3><p className="my-7 font-display text-5xl font-extrabold">R$ 27,90</p><ul className="mb-6 space-y-3">{["80+ aulas em vídeo","Certificado de conclusão","Acesso vitalício","Materiais de apoio","10 bônus exclusivos"].map(x=><li className="flex gap-2 text-sm font-semibold" key={x}><Check className="size-5 text-primary"/>{x}</li>)}</ul><div className="mb-6 rounded-md bg-muted p-4 text-sm leading-6"><strong>Por apenas R$ 17,90 a mais</strong> você leva certificado, materiais, guias e todos os bônus.</div><Button variant="sales" size="xl" asChild><a href="https://checkout.kitpro.store/VCCL1O8SD9G3" onClick={(event) => { event.currentTarget.href = buildVegaCheckoutUrl("https://checkout.kitpro.store/VCCL1O8SD9G3"); }}>Quero o Plano Profissional</a></Button></article>
+        <article className="relative flex flex-col rounded-lg border-2 border-primary bg-card p-7 shadow-xl">
+          <span className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1.5 text-xs font-extrabold uppercase text-primary-foreground">Mais vendido</span>
+          <p className="text-sm font-bold text-muted-foreground">Formação completa + materiais</p>
+          <h3 className="mt-1 text-3xl font-extrabold uppercase">Plano Profissional</h3>
+          <p className="my-7 font-display text-5xl font-extrabold">R$ 27,90</p>
+          <ul className="mb-6 space-y-3">
+            {["80+ aulas em vídeo", "Certificado de conclusão", "Acesso vitalício", "Materiais de apoio"].map(x => <li className="flex gap-2 text-sm font-semibold" key={x}><Check className="size-5 shrink-0 text-primary" />{x}</li>)}
+          </ul>
+          <div className="mb-6 rounded-lg border border-primary/25 bg-primary/5 p-4">
+            <p className="mb-1 text-sm font-extrabold uppercase tracking-wide text-foreground">+ 10 bônus exclusivos inclusos</p>
+            <p className="mb-4 text-xs text-muted-foreground">Guias práticos e materiais de consulta para acompanhar sua evolução.</p>
+            <ul className="grid grid-cols-2 gap-x-3 gap-y-3">
+              {professionalBonuses.map(bonus => <li key={bonus} className="flex items-start gap-1.5 text-xs font-semibold leading-snug text-foreground"><Check className="mt-0.5 size-3.5 shrink-0 text-primary" /><span>{bonus}</span></li>)}
+            </ul>
+          </div>
+          <Button variant="sales" size="xl" asChild><a href="https://checkout.kitpro.store/VCCL1O8SD9G3" onClick={(event) => { event.currentTarget.href = buildVegaCheckoutUrl("https://checkout.kitpro.store/VCCL1O8SD9G3"); }}>Quero o Plano Profissional</a></Button>
+        </article>
       </div><TrustLine />
     </div></section>
 
