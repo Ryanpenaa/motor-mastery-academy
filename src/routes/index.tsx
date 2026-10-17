@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BasicPlanOffer } from "@/components/BasicPlanOffer";
+import { MotoReviews } from "@/components/MotoReviews";
 import { OfferUrgencyAndPurchases } from "@/components/OfferUrgencyAndPurchases";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import bonusExclusivosAsset from "@/assets/bonus-exclusivos-mecanicos-motos.png.asset.json";
@@ -297,6 +298,8 @@ function Index() {
         </article>
       </div><TrustLine />
     </div></section>
+
+    <MotoReviews />
 
     <section data-meta-section="publico" className="py-16 md:py-24"><div className="mx-auto max-w-7xl px-5 md:px-8"><SectionHeading eyebrow="Para quem é" title="Comece do seu ponto de partida" text="Uma formação pensada para diferentes objetivos na mecânica de motocicletas." />
       <div className="grid gap-4 md:grid-cols-3">{audiences.map(({ Icon,title,text })=><article key={title} className="border-l-4 border-primary bg-muted p-6"><Icon className="mb-4 size-7 text-primary"/><h3 className="text-xl font-bold uppercase">{title}</h3><p className="mt-2 text-sm text-muted-foreground">{text}</p></article>)}</div>
