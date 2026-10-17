@@ -15,8 +15,9 @@ function getRemaining() {
   if (typeof window === "undefined") return DURATION;
   try {
     const stored = Number(window.sessionStorage.getItem(STORAGE_KEY));
-    const start = Number.isFinite(stored) && stored > 0 && stored <= Date.now()
-      ? stored : Date.now();
+    let start = Number.isFinite(stored) && stored > 0 && stored <= Date.now() ? stored : Date.now();
+    // Reinicia o ciclo quando chega a zero, para o contador nunca sumir.
+    if (Date.now() - start >= DURATION) start = Date.now();
     if (start !== stored) window.sessionStorage.setItem(STORAGE_KEY, String(start));
     return Math.max(0, DURATION - (Date.now() - start));
   } catch {
@@ -88,12 +89,13 @@ export function OfferUrgencyAndPurchases() {
 
   return (
     <>
-      <div className="relative z-20 border-b border-amber-400/30 bg-amber-400 px-3 py-2.5 text-center text-slate-950">
+      <div className="relative z-20 border-b border-red-500/40 bg-gradient-to-r from-red-700 via-red-600 to-red-700 px-3 py-2.5 text-center text-white shadow-md">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs font-extrabold sm:text-sm">
-          <span className="uppercase tracking-wide font-black" style={{ color: "#dc2626", fontWeight: 900 }}>SÓ HOJE {today}</span>
-          
-          <Clock3 className="size-4 text-red-600" aria-hidden="true" />
-          {remaining > 0 && <span className="rounded-md bg-slate-950 px-2.5 py-1 font-mono text-base font-black tabular-nums text-white" role="timer" aria-label={`${minutes} minutos e ${seconds} segundos restantes`}>{minutes}:{seconds}</span>}
+          <span className="uppercase tracking-wide font-black">🔥 Oferta só hoje · {today}</span>
+          <span className="inline-flex items-center gap-1.5 rounded-md bg-black/80 px-2.5 py-1 ring-1 ring-white/20">
+            <Clock3 className="size-4 text-amber-300" aria-hidden="true" />
+            <span className="min-w-[3.2rem] font-mono text-base font-black tabular-nums text-amber-300" role="timer" aria-label={`${minutes} minutos e ${seconds} segundos restantes`}>{minutes}:{seconds}</span>
+          </span>
         </div>
       </div>
       {purchase && !closed && (
