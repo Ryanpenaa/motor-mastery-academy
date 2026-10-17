@@ -69,12 +69,6 @@ const professionalBonuses = [
   "Guia de Freios e Suspensão",
 ];
 
-const audiences = [
-  { Icon: GraduationCap, title: "Quem começa do zero", text: "Conteúdo progressivo e linguagem simples." },
-  { Icon: Wrench, title: "Quem já faz manutenção", text: "Organize conhecimentos e amplie sua base técnica." },
-  { Icon: Star, title: "Quem busca uma profissão", text: "Construa uma base prática para buscar oportunidades na área." },
-];
-
 const courseSamples = [
   { title: "Motor de motos", src: sample01Asset.url },
   { title: "Sistema de alimentação", src: sample02Asset.url },
@@ -300,10 +294,6 @@ function Index() {
     </div></section>
 
     <MotoReviews />
-
-    <section data-meta-section="publico" className="py-16 md:py-24"><div className="mx-auto max-w-7xl px-5 md:px-8"><SectionHeading eyebrow="Para quem é" title="Comece do seu ponto de partida" text="Uma formação pensada para diferentes objetivos na mecânica de motocicletas." />
-      <div className="grid gap-4 md:grid-cols-3">{audiences.map(({ Icon,title,text })=><article key={title} className="border-l-4 border-primary bg-muted p-6"><Icon className="mb-4 size-7 text-primary"/><h3 className="text-xl font-bold uppercase">{title}</h3><p className="mt-2 text-sm text-muted-foreground">{text}</p></article>)}</div>
-    </div></section>
 
     <section data-meta-section="garantia" className="bg-surface-dark py-16 text-surface-dark-foreground md:py-24"><div className="mx-auto grid max-w-7xl items-center gap-12 px-5 md:grid-cols-2 md:px-8"><div><p className="text-xs font-extrabold uppercase tracking-widest text-primary">Uma habilidade profissional</p><h2 className="mt-3 text-4xl font-extrabold uppercase md:text-5xl">Motos estão em todos os lugares</h2><p className="mt-5 leading-7 text-steel">Utilizadas para trabalho, transporte e lazer. Desenvolva uma base prática para entender manutenção, identificar defeitos e começar a buscar oportunidades.</p><div className="mt-7"><Cta /></div></div><div className="grid gap-4 sm:grid-cols-2"><div className="rounded-lg border border-primary/20 bg-surface-dark-soft p-6 sm:col-span-2"><Award className="mb-5 size-9 text-primary"/><h3 className="text-2xl font-bold uppercase">Certificado digital</h3><p className="mt-3 text-sm leading-6 text-steel">Incluído no Plano Profissional após a conclusão da formação.</p></div><div className="relative overflow-hidden rounded-2xl border border-accent/40 bg-surface-dark-soft p-6 shadow-xl sm:col-span-2 sm:p-8">
           <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
